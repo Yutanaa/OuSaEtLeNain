@@ -5,10 +5,6 @@ public class SeauAuSol : Interactible
     [SerializeField] private SeauEnMain _seauEnMain;
     [SerializeField] private NainVisible _nainVisible;
 
-    private void Start()
-    {
-        GiveMeThatBucket();
-    }
     public override void Interaction()
     {
         GiveMeThatBucket();

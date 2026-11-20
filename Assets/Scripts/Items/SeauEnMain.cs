@@ -5,11 +5,6 @@ public class SeauEnMain : Interactible
     [SerializeField] public NainVisible _nainScript;
     [SerializeField] private LayerMask _nainLayserMask;
 
-    private void Start()
-    {
-        Interaction();
-    }
-
     public override void Interaction()
     {
        if (IsTheGuyHere() == true)
