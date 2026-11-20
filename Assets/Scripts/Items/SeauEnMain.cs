@@ -15,6 +15,7 @@ public class SeauEnMain : Interactible
         {
             _nainScript.NotThisTime();
         }
+        Destroy(this);
     }
 
     public bool IsTheGuyHere()
