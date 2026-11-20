@@ -60,7 +60,16 @@ public class Player : MonoBehaviour
         {
             print("interact");
         }
+
+        else
+        {
+            if (Physics2D.Raycast(transform.position, transform.up, 10))
+            {
+                // return true;
+            }
+        }
     }
+
 
     public void AddItem(GameObject gameo)
     {
