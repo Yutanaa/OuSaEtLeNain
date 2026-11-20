@@ -3,10 +3,13 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public Vector2 lastRespawnPosition;
+    public Animator animator;
+
     public PlayerInput _playerInput;
     public float movingDistance;
-    public Vector2 lastRespawnPosition;
-    
+    public GameObject itemTenu;
+
     private void OnEnable()
     {
         if (_playerInput == null)
@@ -31,32 +34,36 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
         transform.Translate(direction);
+        animator.SetTrigger("Walking");
     }
 
     void OnRelease(InputAction.CallbackContext context)
     {
-        
+
     }
 
     public void Respawn()
     {
-        
+
     }
 
     public void Interact(InputAction.CallbackContext context)
     {
-        print("interact");
+        if (itemTenu)
+        {
+            print("interact");
+        }
     }
 
     public void AddItem(GameObject gameo)
     {
-        
+
     }
 }
