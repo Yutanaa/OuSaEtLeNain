@@ -2133,17 +2133,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737635222647389804}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ca70f9ef34f02747b7916aff3e1a28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  upNeighbours: []
-  rightNeighbours: []
-  downNeighbours: []
-  leftNeighbours: []
-  isBorderTile: 1
-  borderTypes: 
+  northEntryPoint: {fileID: 0}
+  southEntryPoint: {fileID: 0}
+  eastEntryPoint: {fileID: 0}
+  westEntryPoint: {fileID: 0}
+  cameraCenter: {fileID: 0}
 --- !u!1 &1827986879164604588
 GameObject:
   m_ObjectHideFlags: 0

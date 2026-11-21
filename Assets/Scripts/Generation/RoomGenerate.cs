@@ -20,4 +20,5 @@ public class RoomDefinition : ScriptableObject
 
     [Header("Room Openings")]
     public DoorMask openings;
+
 }

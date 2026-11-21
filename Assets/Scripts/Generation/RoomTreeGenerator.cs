@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ public class RoomTreeGenerator : MonoBehaviour
     [Header("Special Rooms")]
     [SerializeField] private RoomDefinition[] specialRooms = new RoomDefinition[6];
     private List<RoomDefinition> roomsPlaced = new List<RoomDefinition>();
+
+
+    private Dictionary<Vector2Int, Tile> generatedRooms =
+        new Dictionary<Vector2Int, Tile>();
 
 
     private List<RoomDefinition> shuffledSpecialRooms = new List<RoomDefinition>();
@@ -95,40 +100,36 @@ public class RoomTreeGenerator : MonoBehaviour
 
         if (randomizeSeed)
             seed = UnityEngine.Random.Range(0, int.MaxValue);
-
         rng = new System.Random(seed);
 
         ClearRooms();
+        generatedRooms.Clear();
         PrepareSpecialRoomPool();
         HashSet<Vector2Int> occupied = new HashSet<Vector2Int>();
 
-        // Toutes les extrémités de branches seront enregistrées ici.
         List<RoomNode> terminalRooms = new List<RoomNode>();
 
-
-        // Nombre de branches actuellement existantes.
-        // On commence avec une seule branche sous la salle de départ.
         int currentLeafCount = 1;
 
-        // Nombre maximum de destinations finales.
         int targetTerminalCount = specialRooms.Length;
 
-        // Nombre maximal de branches qu'une salle peut créer.
         int maxChildrenPerRoom = GetMaxChildrenPerRoom();
 
-        // Salle de départ.
         Vector2Int startPosition = Vector2Int.zero;
 
         occupied.Add(startPosition);
 
-        Instantiate(
-            startRoom.prefab,
-            GridToWorld(startPosition),
-            Quaternion.identity,
-            roomsParent
-        );
 
-        // Première salle obligatoirement en dessous.
+        RoomChoice startChoice = new RoomChoice
+        {
+            definition = startRoom,
+            openings = startRoom.openings,
+            rotationSteps = 0
+        };
+
+        PlaceRoom(startChoice, startPosition);
+
+
         Vector2Int firstPosition = Vector2Int.down;
 
         occupied.Add(firstPosition);
@@ -143,9 +144,9 @@ public class RoomTreeGenerator : MonoBehaviour
                 minRoomsAfterSplit
             )
         );
-        // ==========================================
-        // GENERATION DE L'ARBRE
-        // ==========================================
+
+
+
 
 
 
@@ -153,14 +154,13 @@ public class RoomTreeGenerator : MonoBehaviour
         {
             RoomNode node = pendingRooms.Dequeue();
 
-            // Est-ce que la branche doit encore être prolongée ?
+
             bool mustExtend = node.roomsSinceSplit < minRoomsAfterSplit;
 
-            // Est-ce que nous avons déjà suffisamment de branches ?
+
             bool targetReached = currentLeafCount >= targetTerminalCount;
 
-            // Profondeur maximale atteinte.
-            // On ne termine pas la branche si elle est encore trop courte.
+
             if (node.depth >= maxDepth && !mustExtend)
             {
                 terminalRooms.Add(node);
@@ -170,14 +170,14 @@ public class RoomTreeGenerator : MonoBehaviour
             int maxAllowedChildren;
             int minRequiredChildren;
 
-            // La première salle doit obligatoirement créer deux branches.
+
             if (node.depth == 1)
             {
                 maxAllowedChildren = 2;
                 minRequiredChildren = 2;
             }
-            // Une branche trop courte doit continuer tout droit.
-            // Une fois le quota atteint, plus aucune bifurcation.
+
+
             else if (mustExtend || targetReached)
             {
                 maxAllowedChildren = 1;
@@ -214,7 +214,8 @@ public class RoomTreeGenerator : MonoBehaviour
             }
             else if (mustExtend || targetReached || node.depth < minDepth)
             {
-                // Obligation de continuer avec une seule sortie.
+
+
                 desiredChildren = 1;
             }
             else
@@ -231,7 +232,7 @@ public class RoomTreeGenerator : MonoBehaviour
             RoomChoice choice = new RoomChoice();
             bool found = false;
 
-            // Première salle : T obligatoire.
+
             if (node.depth == 1)
             {
                 found = TryChooseNormalRoom(
@@ -253,7 +254,7 @@ public class RoomTreeGenerator : MonoBehaviour
                 }
             }
 
-            // Aucun chemin compatible disponible.
+
             if (!found)
             {
                 if (mustExtend)
@@ -274,12 +275,10 @@ public class RoomTreeGenerator : MonoBehaviour
 
             int actualChildren = CountDoors(childrenMask);
 
-            // Mise à jour du nombre de branches.
+
             currentLeafCount += actualChildren - 1;
 
-            // Si on vient de créer une bifurcation,
-            // on remet le compteur à zéro pour chaque enfant.
-            // Sinon, on ajoute une salle au chemin existant.
+
             int childRoomsSinceSplit = actualChildren > 1
                 ? 0
                 : node.roomsSinceSplit + 1;
@@ -305,10 +304,6 @@ public class RoomTreeGenerator : MonoBehaviour
             }
         }
 
-
-        // ==========================================
-        // PLACEMENT DES SALLES SPECIALES
-        // ==========================================
 
         if (terminalRooms.Count != specialRooms.Length)
         {
@@ -338,13 +333,12 @@ public class RoomTreeGenerator : MonoBehaviour
             $"Seed : {seed} | " +
             $"Salles spéciales : {terminalRooms.Count}"
         );
+        BuildRoomConnections();
+
+        CameraManager.Instance.Initialize(generatedRooms[startPosition]);
     }
 
 
-    /// <summary>
-    /// Détermine le nombre maximum de branches créées
-    /// par une salle normale.
-    /// </summary>
     private int GetMaxChildrenPerRoom()
     {
         int maxChildren = 1;
@@ -362,10 +356,39 @@ public class RoomTreeGenerator : MonoBehaviour
         return Mathf.Clamp(maxChildren, 1, 3);
     }
 
-    /// <summary>
-    /// Estime le nombre maximum de feuilles pouvant être
-    /// obtenues à partir d'une profondeur donnée.
-    /// </summary>
+    private void BuildRoomConnections()
+    {
+        foreach (Tile room in generatedRooms.Values)
+        {
+            foreach (DoorMask direction in Directions)
+            {
+                if ((room.Openings & direction) == 0)
+                    continue;
+
+                Vector2Int neighbourPosition =
+                    room.GridPosition + DirectionToVector(direction);
+
+                if (!generatedRooms.TryGetValue(
+                    neighbourPosition,
+                    out Tile neighbour))
+                {
+                    continue;
+                }
+
+                // Vérifie que la salle voisine possède également
+                // une ouverture dans notre direction opposée.
+                if ((neighbour.Openings & Opposite(direction)) == 0)
+                    continue;
+
+                room.SetNeighbour(direction, neighbour);
+            }
+        }
+
+        Debug.Log("Connexions entre les salles terminées.");
+    }
+
+
+
     private int GetMaxLeavesFromDepth(
         int depth,
         int maxChildren,
@@ -384,10 +407,7 @@ public class RoomTreeGenerator : MonoBehaviour
         return possibleLeaves;
     }
 
-    /// <summary>
-    /// Calcule le nombre maximum d'extrémités possibles
-    /// après avoir placé une salle avec un certain nombre d'enfants.
-    /// </summary>
+
     private int GetMaximumPossibleTerminalCount(
         RoomNode currentNode,
         Queue<RoomNode> pendingRooms,
@@ -398,7 +418,7 @@ public class RoomTreeGenerator : MonoBehaviour
     {
         int possibleLeaves = terminalRooms.Count;
 
-        // Branches déjà en attente de traitement.
+
         foreach (RoomNode pendingNode in pendingRooms)
         {
             possibleLeaves += GetMaxLeavesFromDepth(
@@ -411,7 +431,7 @@ public class RoomTreeGenerator : MonoBehaviour
                 return targetCount;
         }
 
-        // Branches créées par la salle actuelle.
+
         possibleLeaves += candidateChildren * GetMaxLeavesFromDepth(
             currentNode.depth + 1,
             maxChildren,
@@ -421,10 +441,7 @@ public class RoomTreeGenerator : MonoBehaviour
         return Mathf.Min(possibleLeaves, targetCount);
     }
 
-    /// <summary>
-    /// Détermine le nombre minimum d'enfants nécessaires
-    /// pour pouvoir encore atteindre le nombre de salles souhaité.
-    /// </summary>
+
     private int GetMinimumChildrenNeeded(
         RoomNode node,
         Queue<RoomNode> pendingRooms,
@@ -452,9 +469,7 @@ public class RoomTreeGenerator : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Prépare et mélange les six salles spéciales.
-    /// </summary>
+
     private void PrepareSpecialRoomPool()
     {
         shuffledSpecialRooms.Clear();
@@ -465,9 +480,7 @@ public class RoomTreeGenerator : MonoBehaviour
         specialRoomIndex = 0;
     }
 
-    /// <summary>
-    /// Mélange les salles spéciales aléatoirement.
-    /// </summary>
+
     private void ShuffleSpecialRooms()
     {
         for (int i = shuffledSpecialRooms.Count - 1; i > 0; i--)
@@ -480,10 +493,7 @@ public class RoomTreeGenerator : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Retourne la prochaine salle spéciale disponible.
-    /// Remélange les six salles lorsqu'elles ont toutes été utilisées.
-    /// </summary>
+
     private RoomDefinition GetNextSpecialRoom()
     {
         if(shuffledSpecialRooms.Count == 0)
@@ -528,7 +538,7 @@ public class RoomTreeGenerator : MonoBehaviour
             {
                 DoorMask mask = RotateMask(definition.openings, rotation);
 
-                // Entrée obligatoire vers la salle précédente.
+
                 if ((mask & node.parentDoor) == 0)
                     continue;
 
@@ -597,7 +607,7 @@ public class RoomTreeGenerator : MonoBehaviour
         {
             DoorMask mask = RotateMask(definition.openings, rotation);
 
-            // L'unique ouverture doit pointer vers le parent.
+
             if (mask != node.parentDoor)
                 continue;
 
@@ -675,12 +685,31 @@ public class RoomTreeGenerator : MonoBehaviour
             choice.rotationSteps * 90f
         );
 
-        Instantiate(
+        GameObject instance = Instantiate(
             choice.definition.prefab,
             GridToWorld(gridPosition),
             rotation,
             roomsParent
         );
+
+        Tile generatedRoom = instance.GetComponent<Tile>();
+
+        if (generatedRoom == null)
+        {
+            Debug.LogError(
+                $"Le prefab {instance.name} ne possède pas Tile."
+            );
+
+            return;
+        }
+
+        generatedRoom.Initialize(
+            gridPosition,
+            choice.openings,
+            choice.rotationSteps
+        );
+
+        generatedRooms[gridPosition] = generatedRoom;
     }
 
     private Vector3 GridToWorld(Vector2Int position)
