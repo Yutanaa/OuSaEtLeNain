@@ -38,6 +38,7 @@ public class SalleDesNainPoster : MonoBehaviour
             {
                 N.gameObject.GetComponent<NainPoster>().SetCenter(_center.transform);
                 N.gameObject.GetComponent<NainPoster>()._originalVentsList = _ventsList;
+                N.gameObject.GetComponent<NainPoster>()._salleDesNains = this;
 
             }
             if (N.gameObject.GetComponent<NainPasPoster>())
@@ -98,5 +99,13 @@ public class SalleDesNainPoster : MonoBehaviour
         _nainsActif.Clear();
         Debug.Log("oui j'ai restart" + _nainsActif.Count);
         StartEvent();
+    }
+
+    public void DestroyTheNains()
+    {
+        foreach (GameObject N in _nainsActif)
+        {
+            Destroy(N);
+        }
     }
 }

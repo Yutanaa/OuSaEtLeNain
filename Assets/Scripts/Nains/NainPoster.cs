@@ -7,6 +7,7 @@ public class NainPoster : Interactible
     private int _witchSecond;
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
     [SerializeField] public List<GameObject> _originalVentsList = new List<GameObject>();
+    [SerializeField] public SalleDesNainPoster _salleDesNains;
 
     [SerializeField] private Animator _animator;
 
@@ -107,6 +108,7 @@ public class NainPoster : Interactible
     public override void Interaction()
     {
         //faire exploser le joueur pour qu'il retourne au début de la salle
+        _salleDesNains.DestroyTheNains();
         Debug.Log("let me clap that cheek");
     }
 
