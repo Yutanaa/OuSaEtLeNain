@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public PlayerInput _playerInput;
     public float movingDistance;
     public GameObject itemTenu;
+    public LayerMask layerMask;
 
     private void OnEnable()
     {
@@ -63,9 +64,19 @@ public class Player : MonoBehaviour
 
         else
         {
-            if (Physics2D.Raycast(transform.position, transform.up, 10))
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.right, 100f, layerMask);
+            
+            // Does the ray intersect any objects excluding the player layer
+            if (hit)
             {
-                // return true;
+                Debug.DrawRay(transform.position, transform.TransformDirection(-transform.right) * hit.distance, Color.red);
+                Debug.Log("Did Hit");
+                hit.collider?.GetComponent<IInteractible>().Interaction();
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(-transform.right) * 10000000, Color.yellow);
+                Debug.Log("Did not Hit");
             }
         }
     }
