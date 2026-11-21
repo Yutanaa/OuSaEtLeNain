@@ -12,10 +12,19 @@ public class NainPasPoster : Interactible, INainPReset
     private Coroutine goCoroutine;
     private void Start()
     {
+
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
+    public void StartMoving()
+    {
         ResetPos();
 
-        if (_center)
-            _goHere = WhereToGo();
+        StartCoroutine(GoDiego());
     }
 
     public void SetCenter(Transform center)
@@ -58,7 +67,7 @@ public class NainPasPoster : Interactible, INainPReset
             Debug.Log("No center");
             return Vector2.zero;
         }
-        Vector2 Here = new Vector2(RandomPos(_center.position.x - 4f, _center.position.x + 4f), RandomPos(_center.position.y - 4f, _center.position.y + 4f));
+        Vector2 Here = new Vector2(RandomPos(_center.position.x - 2f, _center.position.x + 2f), RandomPos(_center.position.y - 2f, _center.position.y + 2f));
         return Here;
     }
 
