@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private MinimapManager minimapManager;
 
     [Header("Player Controls")]
     [Tooltip("Scripts du joueur à désactiver pendant la transition.")]
@@ -34,6 +35,9 @@ public class CameraManager : MonoBehaviour
     public void Initialize(Tile startingRoom)
     {
         currentRoom = startingRoom;
+        currentRoom.DoorActive(true);
+        minimapManager.Initialize(currentRoom);
+        currentRoom.SetRoomContentActive(true);
 
         if (currentRoom == null)
             Debug.LogError("RoomTransitionManager : salle de départ manquante.");
@@ -76,6 +80,8 @@ public class CameraManager : MonoBehaviour
         Transform entryPoint)
     {
         isTransitioning = true;
+        currentRoom.DoorActive(false);
+        nextRoom.SetRoomContentActive(true);
 
         bool[] previousStates = new bool[playerControls.Length];
 
@@ -130,7 +136,14 @@ public class CameraManager : MonoBehaviour
 
         cameraTransform.position = cameraTarget;
 
+
+        Tile oldRoom = currentRoom;
+
         currentRoom = nextRoom;
+        minimapManager.VisitRoom(currentRoom);
+        currentRoom.DoorActive(true);
+        oldRoom.SetRoomContentActive(false);
+
 
         for (int i = 0; i < playerControls.Length; i++)
         {
@@ -140,6 +153,7 @@ public class CameraManager : MonoBehaviour
 
         isTransitioning = false;
     }
+
 
     private static DoorMask Opposite(DoorMask direction)
     {

@@ -375,8 +375,7 @@ public class RoomTreeGenerator : MonoBehaviour
                     continue;
                 }
 
-                // Vérifie que la salle voisine possède également
-                // une ouverture dans notre direction opposée.
+
                 if ((neighbour.Openings & Opposite(direction)) == 0)
                     continue;
 

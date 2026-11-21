@@ -1,10 +1,12 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
     [Header("Room Information")]
+    [SerializeField] public Image tileIcon;
     public Vector2Int GridPosition { get; private set; }
     public DoorMask Openings { get; private set; }
     public int RotationSteps { get; private set; }
@@ -18,6 +20,10 @@ public class Tile : MonoBehaviour
     [SerializeField] private Transform eastEntryPoint;
     [SerializeField] private Transform westEntryPoint;
 
+    [Header("Activate desactivate")]
+    [SerializeField] private List<GameObject> doors;
+    [SerializeField] private GameObject roomContent;
+
     [SerializeField] private Transform cameraCenter;
     public Transform CameraCenter => cameraCenter;
 
@@ -26,6 +32,8 @@ public class Tile : MonoBehaviour
         DoorMask openings,
         int rotationSteps)
     {
+        DoorActive(false);
+        SetRoomContentActive(false);
         GridPosition = gridPosition;
         Openings = openings;
         RotationSteps = rotationSteps;
@@ -95,6 +103,25 @@ public class Tile : MonoBehaviour
             mask = rotated;
         }
 
+        Debug.Log("Rotated Mask: " + mask);
+
         return mask;
     }
+
+    public void DoorActive(bool active)
+    {
+        foreach (var door in doors)
+        {
+            door.SetActive(active);
+        }
+    }
+
+    public void SetRoomContentActive(bool active)
+    {
+        if (roomContent != null)
+        {
+            roomContent.SetActive(active);
+        }
+    }
+
 }
