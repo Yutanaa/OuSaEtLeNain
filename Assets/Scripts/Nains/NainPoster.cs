@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NainPoster : Interactible , INainPReset
+public class NainPoster : Interactible
 {
     private int _witchSecond;
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
@@ -11,7 +11,7 @@ public class NainPoster : Interactible , INainPReset
     public Transform _center;
     private SpriteRenderer _spriteRenderer;
     private float _timer;
-    private bool _canMove = true;
+    private bool _canMove = false;
     private bool _goToVent = false;
     private Vector2 _goHere;
     private Vector2 _spawnPos;
@@ -24,25 +24,24 @@ public class NainPoster : Interactible , INainPReset
     private void OnEnable()
     {
 
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _witchSecond  = (int)Random.Range(1, 6);
         Debug.Log("j'irais dans la vent à " +  _witchSecond);
-    }
-
-    private void Start()
-    {
-
+        ResetPos();
     }
 
     public void StartMoving()
     {
-        ResetPos();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Log("staroui");
         ResetList();
-        StartCoroutine(GoDiego());
+        _canMove = true;
+        GoDiego();
     }
 
     private void FixedUpdate()
     {
+        if (!_canMove) return;
+
         if(_timer < 10)
         {
             _timer += Time.deltaTime;
@@ -52,7 +51,7 @@ public class NainPoster : Interactible , INainPReset
             }
             if (Vector2.Distance(transform.position, _goHere) < 0.1f)
             {
-                StartCoroutine(GoDiego());
+               GoDiego();
             }
         }
         else
@@ -67,7 +66,7 @@ public class NainPoster : Interactible , INainPReset
         } 
     }
 
-    IEnumerator GoDiego()
+    private void GoDiego()
     {
         if (_canMove)
         {
@@ -82,7 +81,6 @@ public class NainPoster : Interactible , INainPReset
             else
             {
                 _goHere = WhereToGo();
-                yield return null;
             }
         }
     }
@@ -107,16 +105,19 @@ public class NainPoster : Interactible , INainPReset
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_ventsList.Contains(collision.gameObject))
+        if (_goToVent)
         {
-            _ventsList.Remove(collision.gameObject);
-            Debug.Log("ok1");
-            StartCoroutine(InVent());
-            Debug.Log("ok2");
-            StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
-            Debug.Log("ok3");
-        }
-        Debug.Log("non");
+            if (_ventsList.Contains(collision.gameObject))
+            {
+                //_ventsList.Remove(collision.gameObject);
+                Debug.Log("ok1");
+                StartCoroutine(InVent());
+                Debug.Log("ok2");
+                StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
+                Debug.Log("ok3");
+            }
+            Debug.Log("non");
+        }  
     }
 
     IEnumerator InVent()
@@ -134,15 +135,10 @@ public class NainPoster : Interactible , INainPReset
             transform.position = where;
             ResetList();
             yield return new WaitForSeconds(0.5f);
-            StartCoroutine(GoDiego());
+            GoDiego();
         }
     }
 
-    public virtual void ResetAllStats()
-    {
-        _timer = 0;
-        ResetPos();
-    }
     private void ResetList()
     {
         _ventsList = _originalVentsList;

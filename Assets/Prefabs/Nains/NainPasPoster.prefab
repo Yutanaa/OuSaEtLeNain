@@ -104,7 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3157c07d507f414fad30c4f84034a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NainPasPoster
-  _canMove: 1
+  _SalleDesNainPoster: {fileID: 0}
+  _canMove: 0
   _goHere: {x: 0, y: 0}
   _spawnPos: {x: 0, y: 0}
   _center: {fileID: 0}
