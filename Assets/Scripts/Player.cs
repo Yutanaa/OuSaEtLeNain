@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,8 +17,9 @@ public class Player : MonoBehaviour
     public Vector2 LookingDirection;
 
     public bool canMove;
+    public bool onRope = false;
 
-    public event Action<Vector2> OnStepCompleted;
+
 
     private void OnEnable()
     {
@@ -60,9 +60,37 @@ public class Player : MonoBehaviour
                 sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
             }
             // transform.Translate(direction);
+            if (direction.y > 0)
+            {
+                animator.SetTrigger("WalkingUp");
+            }
+            else if (direction.y < 0)
+            {
+                animator.SetTrigger("WalkingDown");
+            }
+            else
+            {
+                
+                animator.SetTrigger("Walking");
+            }
+
             StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
 
             LookingDirection = direction;
+        }
+
+        if (onRope)
+        {
+
+        }
+    }
+
+    public IEnumerator RopeWalkRoutine()
+    {
+        float nextExpectInput = -1;
+        while (true)
+        {
+
         }
     }
 
@@ -70,9 +98,6 @@ public class Player : MonoBehaviour
     {
         float elapsed_time = 0;
         Vector2 currentPos = transform.position;
-
-        Vector2 previousPosition = transform.position;
-        animator.SetTrigger("Walking");
 
         while (elapsed_time <= duree)
         {
@@ -91,7 +116,6 @@ public class Player : MonoBehaviour
         }
 
         canMove = true;
-        OnStepCompleted?.Invoke(previousPosition);
         yield return null;
     }
 
