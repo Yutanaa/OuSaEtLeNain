@@ -442,6 +442,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8059049934935904017}
   - component: {fileID: 7504903742390872786}
+  - component: {fileID: 3643171004069978808}
+  - component: {fileID: 4398181120304005908}
   m_Layer: 0
   m_Name: NainsistepasRoom
   m_TagString: Untagged
@@ -485,14 +487,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
   tileIcon: {fileID: 8617994773025693073, guid: b9c0cb9322b988748b7e78497572c94a, type: 3}
-  northEntryPoint: {fileID: 0}
-  southEntryPoint: {fileID: 2038671358219985067}
+  northEntryPoint: {fileID: 2038671358219985067}
+  southEntryPoint: {fileID: 0}
   eastEntryPoint: {fileID: 0}
   westEntryPoint: {fileID: 0}
   doors:
   - {fileID: 1418454515815346176}
   roomContent: {fileID: 955108011377207286}
   cameraCenter: {fileID: 1224912901913155772}
+--- !u!114 &3643171004069978808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888585104357403674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac90be1e3869404d8ab6c5eaf56f1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpecialRoomsController
+  nainsInRoom:
+  - {fileID: 531329173698335153}
+--- !u!61 &4398181120304005908
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888585104357403674}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 9, y: 9}
+  m_EdgeRadius: 0
 --- !u!1 &5612934850923788693
 GameObject:
   m_ObjectHideFlags: 0

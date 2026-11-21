@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NainVisible : Interactible
+public class NainVisible : NainBase
 {
     private SpriteRenderer _renderer;
     [SerializeField] private ParticleSystem particle;

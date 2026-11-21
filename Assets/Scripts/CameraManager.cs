@@ -94,15 +94,9 @@ public class CameraManager : MonoBehaviour
             playerControls[i].enabled = false;
         }
 
-        if (playerRb != null)
-        {
-            playerRb.linearVelocity = Vector2.zero;
-            playerRb.position = entryPoint.position;
-        }
-        else
-        {
-            player.position = entryPoint.position;
-        }
+        Debug.Log("Trying to move player, but playerRb is null. Ensure the Rigidbody2D component is assigned in the inspector.");
+        player.gameObject.GetComponent<Player>().Teleport(entryPoint.position);
+
 
 
         nextRoom.SetEnteredFrom(entryDirection);

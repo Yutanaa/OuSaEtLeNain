@@ -200,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2285350294693908028}
   - component: {fileID: 9080747572379391092}
+  - component: {fileID: 1064419140542219977}
   m_Layer: 0
   m_Name: InvinsibleRoom
   m_TagString: Untagged
@@ -250,6 +251,21 @@ MonoBehaviour:
   - {fileID: 7100501452974557703}
   roomContent: {fileID: 303140905249367768}
   cameraCenter: {fileID: 7790848152157484001}
+--- !u!114 &1064419140542219977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533673477574589257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac90be1e3869404d8ab6c5eaf56f1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpecialRoomsController
+  nainsInRoom:
+  - {fileID: 3132887813468190149}
+  - {fileID: 8254346853481652196}
 --- !u!1 &2558613730691502739
 GameObject:
   m_ObjectHideFlags: 0

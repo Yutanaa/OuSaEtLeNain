@@ -1,6 +1,6 @@
 ﻿
 
-public abstract class CrazyNain : Interactible
+public abstract class CrazyNain : NainBase
 {
     public bool _isDown = false;
 

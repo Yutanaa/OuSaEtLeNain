@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Nainsistepas : Interactible
+public class Nainsistepas : NainBase
 {
     public override void Interaction()
     {
