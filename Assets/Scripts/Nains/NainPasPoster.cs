@@ -1,39 +1,73 @@
 using System.Collections;
 using UnityEngine;
 
-public class NainPasPoster : Interactible
+public class NainPasPoster : Interactible, INainPReset
 {
-    private bool _canMove = true;
-    private Vector2 _goHere;
+    public bool _canMove = true;
+    public Vector2 _goHere;
+    public Vector2 _spawnPos;
+    public Transform _center;
+    public float _timer;
+
+    private Coroutine goCoroutine;
     private void Start()
     {
+
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
+    public void StartMoving()
+    {
+        ResetPos();
+
         StartCoroutine(GoDiego());
     }
 
+    public void SetCenter(Transform center)
+    {
+        if (center == null)
+            Debug.Log("ON A PAS DE CENTRE NOUSUS");
+        _center = center;
+    }
     private void FixedUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f*Time.deltaTime);
-    }
-    IEnumerator Wait(float duration)
-    {
-        _canMove = false;
-        StopAllCoroutines();
-        yield return new WaitForSeconds(duration);
-        _canMove = true;
+        if (_timer < 10)
+        {
+            _timer += Time.deltaTime;
+
+            if (_canMove)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f * Time.deltaTime);
+                if (Vector2.Distance(transform.position, _goHere) < 0.1f)
+                {
+                    _goHere = WhereToGo();
+                }
+            }
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+        }
     }
 
     IEnumerator GoDiego()
     {
-        if (_canMove)
-        {
-            _goHere = WhereToGo();
-            yield return new WaitForSeconds(3);
-            StartCoroutine(GoDiego());
-        }
+        _goHere = WhereToGo();
+        yield return null;
     }
+
     private Vector2 WhereToGo()
     {
-        Vector2 Here = new Vector2(RandomPos(-5f,5), RandomPos(-3f, 3f));
+        if (!_center)
+        {
+            Debug.Log("No center");
+            return Vector2.zero;
+        }
+        Vector2 Here = new Vector2(RandomPos(_center.position.x - 2f, _center.position.x + 2f), RandomPos(_center.position.y - 2f, _center.position.y + 2f));
         return Here;
     }
 
@@ -47,5 +81,15 @@ public class NainPasPoster : Interactible
     public override void Interaction()
     {
         //faire exploser le joueur pour qu'il retourne au début de la salle
+    }
+
+    public virtual void ResetAllStats()
+    {
+        _timer = 0;
+        ResetPos();
+    }
+    private void ResetPos()
+    {
+        _spawnPos = transform.position;
     }
 }
