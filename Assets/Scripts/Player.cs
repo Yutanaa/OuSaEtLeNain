@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Vector2 _currentKey;
     [SerializeField] private float _gonnaFall = 5;
     public Vector2 _targetToReach;
+    public Transform _spawn;
 
 
     [SerializeField] public SeauEnMain itemTenu;
@@ -56,17 +57,34 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (!onRope) return;
+        animator.SetBool("OnRope", true);
         if (_gonnaFall > 0)
         {
             _gonnaFall -= Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, _targetToReach, 0.2f * Time.deltaTime);
+            animator.SetFloat("Fall", _gonnaFall);
+            transform.position = Vector2.MoveTowards(transform.position, _targetToReach, 0.4f * Time.deltaTime);
             if (Vector2.Distance(transform.position, _targetToReach) < 1)
             {
+                animator.SetBool("OnRope", false);
                 transform.position = _targetToReach;
                 canMove = true;
                 onRope = false;
             }
         }
+        else
+        {
+            StartCoroutine(Falling());
+        }
+    }
+
+    IEnumerator Falling()
+    {
+        yield return new WaitForSeconds(1);
+        animator.SetBool("OnRope", false);
+        transform.position = _spawn.position;
+        canMove = true;
+        onRope = false;
+        _gonnaFall = 5;
     }
 
     public void SetRespawnPoint(Vector2 pos)
@@ -110,12 +128,12 @@ public class Player : MonoBehaviour
             if (_currentKey == direction)
             {
                 Debug.Log("GG");
-                _gonnaFall += 1;
+                _gonnaFall += 1.5f;
                 KeyLoader();
             }
             else
             {
-                _gonnaFall -= 1;
+                _gonnaFall -= 1.5f;
                 Debug.Log("nique toi");
             }
         }
@@ -209,10 +227,6 @@ public class Player : MonoBehaviour
                 else
                 {
                     hit.collider?.GetComponent<IInteractible>().Interaction();
-                    if (onRope)
-                    {
-                        hit.collider.enabled = false;
-                    }
                 }
             }
             else
