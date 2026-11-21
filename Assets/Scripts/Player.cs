@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public Vector2 LookingDirection;
 
     public bool canMove;
+    public bool onCorde;
 
 
 
