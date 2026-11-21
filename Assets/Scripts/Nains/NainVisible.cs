@@ -3,6 +3,9 @@ using UnityEngine;
 public class NainVisible : Interactible
 {
     private SpriteRenderer _renderer;
+    [SerializeField] private ParticleSystem particle;
+
+
 
     private void OnEnable()
     {
@@ -12,6 +15,8 @@ public class NainVisible : Interactible
     {
         if (IsInteractible)
         {
+            //TODO : Rajouter le nain
+            Destroy(this.gameObject);
 
         }
     }
@@ -19,13 +24,14 @@ public class NainVisible : Interactible
     public void NotThisTime()
     {
         //faire spawn les particules de poussière
-        print("pipi");
+        if (particle != null)
+            particle.Play();
+
     }
 
     public void SalirLeNain()
     {
         IsInteractible = true;
         _renderer.enabled = true;
-        print("caca");
     }
 }
