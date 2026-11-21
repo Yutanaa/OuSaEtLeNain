@@ -5464,6 +5464,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3287867965558571}
     m_Modifications:
+    - target: {fileID: 503064335450443406, guid: 7fc82a2569bad244c8407d4c55e0cd31, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 4770394361272757262, guid: 7fc82a2569bad244c8407d4c55e0cd31, type: 3}
       propertyPath: m_Name
       value: Trou
@@ -5683,6 +5687,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3287867965558571}
     m_Modifications:
+    - target: {fileID: 503064335450443406, guid: 7fc82a2569bad244c8407d4c55e0cd31, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 4770394361272757262, guid: 7fc82a2569bad244c8407d4c55e0cd31, type: 3}
       propertyPath: m_Name
       value: Trou (1)
