@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2837441475576982366}
   - component: {fileID: 122703840673392642}
   - component: {fileID: 2607774465799772983}
-  m_Layer: 0
+  - component: {fileID: 2972316069098762733}
+  m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,8 +54,8 @@ MonoBehaviour:
   movingDistance: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  sprite: {fileID: 0}
+    m_Bits: 1024
+  sprite: {fileID: 6423800116744667185}
   LookingDirection: {x: 0, y: 0}
   canMove: 1
 --- !u!114 &122703840673392642
@@ -200,6 +201,33 @@ CapsuleCollider2D:
   m_Offset: {x: -0.06999388, y: 0.013998747}
   m_Size: {x: 0.61199015, y: 1.2799754}
   m_Direction: 0
+--- !u!50 &2972316069098762733
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211898014387995459}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &6423800116744667185
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +239,7 @@ GameObject:
   - component: {fileID: 6277935318293230862}
   - component: {fileID: 8959139133824082391}
   - component: {fileID: 5894606711387988678}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +308,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5063832010788998411, guid: 8f64f3254454375448412719a8d99dc4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5353758976209857199}
   - component: {fileID: 3122881110796964497}
   - component: {fileID: 4380621831931233340}
-  - component: {fileID: 2685254467681762965}
-  m_Layer: 0
+  - component: {fileID: 7205363439544028489}
+  m_Layer: 10
   m_Name: NainPoster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -9021340190293948469, guid: 9590fbb71be36f149907f93821ca2bf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,8 +111,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _originalVentsList:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _center: {fileID: 0}
@@ -152,7 +150,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!50 &2685254467681762965
+--- !u!50 &7205363439544028489
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -164,7 +162,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0

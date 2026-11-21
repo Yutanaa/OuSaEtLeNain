@@ -63,6 +63,7 @@ public class NainPoster : Interactible
         if ((int)_timer == (int)_witchSecond)
         {
             _goToVent = true;
+            Debug.Log("Je suis sus?");
         } 
     }
 
@@ -100,6 +101,7 @@ public class NainPoster : Interactible
     public override void Interaction()
     {
         //faire exploser le joueur pour qu'il retourne au début de la salle
+        Debug.Log("let me clap that cheek");
     }
 
 
@@ -107,14 +109,15 @@ public class NainPoster : Interactible
     {
         if (_goToVent)
         {
+            Debug.Log("Il rentre dans la vent");
             if (_ventsList.Contains(collision.gameObject))
             {
-                //_ventsList.Remove(collision.gameObject);
-                Debug.Log("ok1");
+
+                Debug.Log("La vent est possible, je rentre");
                 StartCoroutine(InVent());
-                Debug.Log("ok2");
+                Debug.Log("ok1");
                 StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
-                Debug.Log("ok3");
+                Debug.Log("ok2");
             }
             Debug.Log("non");
         }  
@@ -122,6 +125,7 @@ public class NainPoster : Interactible
 
     IEnumerator InVent()
     {
+        Debug.Log("I'm invisible");
         _spriteRenderer.enabled = false;
         yield return new WaitForSeconds(0.5f);
         _spriteRenderer.enabled = true;

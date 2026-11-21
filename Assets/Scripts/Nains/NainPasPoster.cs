@@ -26,6 +26,7 @@ public class NainPasPoster : Interactible
     public override void Interaction()
     {
         _SalleDesNainPoster.RestartEvent();
+        //_SalleDesNainPoster.ActiveFence();
     }
 
     public void SetCenter(Transform center)
