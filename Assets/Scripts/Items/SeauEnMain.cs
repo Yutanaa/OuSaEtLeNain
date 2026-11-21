@@ -5,31 +5,31 @@ public class SeauEnMain : Interactible
     [SerializeField] public NainVisible _nainScript;
     [SerializeField] private LayerMask _nainLayserMask;
 
-    public override void Interaction()
-    {
-        if (IsTheGuyHere() == true)
-        {
-            _nainScript.Interaction();
-        }
-        else if (IsTheGuyHere() == false)
-        {
-            _nainScript.NotThisTime();
-        }
-        Destroy(this);
-    }
+    //public override void Interaction()
+    //{
+    //    if (IsTheGuyHere() == true)
+    //    {
+    //        _nainScript.Interaction();
+    //    }
+    //    else if (IsTheGuyHere() == false)
+    //    {
+    //        _nainScript.NotThisTime();
+    //    }
+    //    Destroy(this);
+    //}
 
-    public bool IsTheGuyHere()
-    {
-        if (Physics2D.Raycast(transform.position, transform.up, 10, _nainLayserMask))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    //public bool IsTheGuyHere()
+    //{
+    //    if (Physics2D.Raycast(transform.position, transform.up, 10, _nainLayserMask))
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
        
-    }
+    //}
 
 
     public void ShootDirt(Vector2 LookingDirection, Vector2 StartPosition)
@@ -49,7 +49,7 @@ public class SeauEnMain : Interactible
         {
             Debug.DrawRay(StartPosition, transform.TransformDirection(LookingDirection) * 1f, Color.blue);
 
-            print("eeeeeeee");
+
             _nainScript.NotThisTime();
             Destroy(gameObject);
             // Debug.Log("Did not Hit");

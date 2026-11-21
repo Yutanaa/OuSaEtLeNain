@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
 
     public bool canMove;
     public bool onRope = false;
+    public event Action<Vector2> OnStepCompleted;
 
 
 
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour
     {
         float elapsed_time = 0;
         Vector2 currentPos = transform.position;
+        Vector2 previousPosition = transform.position;
 
         while (elapsed_time <= duree)
         {
@@ -114,6 +118,9 @@ public class Player : MonoBehaviour
 
             elapsed_time += Time.deltaTime;
         }
+
+
+        OnStepCompleted?.Invoke(previousPosition);
 
         canMove = true;
         yield return null;
