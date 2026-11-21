@@ -4,7 +4,7 @@ public abstract class CrazyNain : Interactible
 {
     public bool _isDown = false;
 
-    public void Hit()
+    public virtual void Hit()
     {
         if (!_isDown)
         {

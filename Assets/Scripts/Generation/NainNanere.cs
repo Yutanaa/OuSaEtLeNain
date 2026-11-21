@@ -16,6 +16,8 @@ public class NainNanere : CrazyNain
 
     private bool isTeleporting = false;
 
+    private Transform actualTPPoint;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -23,14 +25,14 @@ public class NainNanere : CrazyNain
 
     private void Update()
     {
-        if(isTeleporting)
+        if(isTeleporting || _isDown)
             return;
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, _detectRangePlayer, Vector2.zero, 0f, playerLayerMask);
 
         if (hit)
         {
-            Transform tp = _crazyRoomManager.GetRandomTPPoint();
-
+            Transform tp = _crazyRoomManager.GetRandomTPPoint(actualTPPoint);
+            actualTPPoint = tp;
             player = hit.collider.GetComponent<Player>();
 
             if (tp != null)
@@ -45,6 +47,13 @@ public class NainNanere : CrazyNain
                 teleportCoroutine = StartCoroutine(TeleportToPoint(tp));
             }
         }
+    }
+
+    public override void Interaction()
+    {
+        base.Interaction();
+        _crazyRoomManager.AddCrazyNain(this);
+
     }
 
     IEnumerator TeleportToPoint(Transform tp)

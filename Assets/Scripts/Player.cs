@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour
 
     public bool canMove;
 
-
+    public event Action<Vector2> OnStepCompleted;
 
     private void OnEnable()
     {
@@ -70,6 +71,7 @@ public class Player : MonoBehaviour
         float elapsed_time = 0;
         Vector2 currentPos = transform.position;
 
+        Vector2 previousPosition = transform.position;
         animator.SetTrigger("Walking");
 
         while (elapsed_time <= duree)
@@ -89,6 +91,7 @@ public class Player : MonoBehaviour
         }
 
         canMove = true;
+        OnStepCompleted?.Invoke(previousPosition);
         yield return null;
     }
 
