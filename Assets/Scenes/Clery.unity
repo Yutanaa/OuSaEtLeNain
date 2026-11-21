@@ -380,23 +380,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 139624005107771499, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
       propertyPath: m_Size.y
-      value: 1.0001001
+      value: 3.051462
       objectReference: {fileID: 0}
     - target: {fileID: 139624005107771499, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
       propertyPath: m_Offset.y
-      value: -0.000000029802322
-      objectReference: {fileID: 0}
-    - target: {fileID: 139624005107771499, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2765265673763687955, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3583283687562420850, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.5105404
       objectReference: {fileID: 0}
     - target: {fileID: 4582175516720732276, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
       propertyPath: m_LocalPosition.x
@@ -437,6 +425,30 @@ PrefabInstance:
     - target: {fileID: 4582175516720732276, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939671315798532728, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5207124
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939671315798532728, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Offset.x
+      value: 2.2396438
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939671315798532728, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124217435013129795, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Size.x
+      value: 2.4771404
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124217435013129795, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Offset.x
+      value: -2.2614298
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124217435013129795, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5072379
       objectReference: {fileID: 0}
     - target: {fileID: 8244261136102792419, guid: e9f8177165ea7444eadc7c6abdb7c728, type: 3}
       propertyPath: m_Name

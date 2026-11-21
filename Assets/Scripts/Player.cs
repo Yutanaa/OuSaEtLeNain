@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Vector2> _keyToPress = new List<Vector2>();
     [SerializeField] private int _maxQTE = 3;
     private Vector2 _currentKey;
-    [SerializeField] private float _gonnaFall = 5;
+    public float _gonnaFall = 5;
     public Vector2 _targetToReach;
     public Transform _spawn;
 
@@ -97,35 +97,38 @@ public class Player : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext context)
     {
-        if (!canMove || isTeleporting)
+        if ((!canMove || isTeleporting)  && !onRope)
             return;
 
         Vector2 direction = context.ReadValue<Vector2>();
 
 
-        canMove = false;
-        if (direction.x != 0)
+        if (canMove)
         {
-            sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
-        }
-        // transform.Translate(direction);
-        if (direction.y > 0)
-        {
-            animator.SetTrigger("WalkingUp");
-        }
-        else if (direction.y < 0)
-        {
-            animator.SetTrigger("WalkingDown");
-        }
-        else
-        {
+            canMove = false;
+            if (direction.x != 0)
+            {
+                sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
+            }
+            // transform.Translate(direction);
+            if (direction.y > 0)
+            {
+                animator.SetTrigger("WalkingUp");
+            }
+            else if (direction.y < 0)
+            {
+                animator.SetTrigger("WalkingDown");
+            }
+            else
+            {
 
-            animator.SetTrigger("Walking");
+                animator.SetTrigger("Walking");
+            }
+
+            movementCoroutine = StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
+
+            LookingDirection = direction; 
         }
-
-        movementCoroutine = StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
-
-        LookingDirection = direction;
 
 
         if (onRope)
