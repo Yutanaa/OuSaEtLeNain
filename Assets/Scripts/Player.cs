@@ -1,11 +1,18 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private List<Vector2> _keyToPress = new List<Vector2>();
+    [SerializeField] private int _maxQTE = 3;
+    private Vector2 _currentKey;
+    [SerializeField] private float _gonnaFall = 5;
+    public Vector2 _targetToReach;
+
+
     [SerializeField] public SeauEnMain itemTenu;
     public Vector2 lastRespawnPosition;
     public Animator animator;
@@ -46,6 +53,22 @@ public class Player : MonoBehaviour
         LookingDirection = -transform.right;
     }
 
+    private void Update()
+    {
+        if (!onRope) return;
+        if (_gonnaFall > 0)
+        {
+            _gonnaFall -= Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, _targetToReach, 0.2f * Time.deltaTime);
+            if (Vector2.Distance(transform.position, _targetToReach) < 1)
+            {
+                transform.position = _targetToReach;
+                canMove = true;
+                onRope = false;
+            }
+        }
+    }
+
     public void SetRespawnPoint(Vector2 pos)
     {
         lastRespawnPosition = pos;
@@ -84,18 +107,40 @@ public class Player : MonoBehaviour
 
         if (onRope)
         {
-
+            if (_currentKey == direction)
+            {
+                Debug.Log("GG");
+                _gonnaFall += 1;
+                KeyLoader();
+            }
+            else
+            {
+                _gonnaFall -= 1;
+                Debug.Log("nique toi");
+            }
         }
     }
-
-    public IEnumerator RopeWalkRoutine()
+    public void KeyLoader()
     {
-        float nextExpectInput = -1;
-        while (true)
+        _currentKey = _keyToPress[UnityEngine.Random.Range(0, _keyToPress.Count)];
+        if (_currentKey == new Vector2(1, 0))
         {
-
+            Debug.Log("droite");
+        }
+        if (_currentKey == new Vector2(-1, 0))
+        {
+            Debug.Log("gauche");
+        }
+        if (_currentKey == new Vector2(0, 1))
+        {
+            Debug.Log("haut");
+        }
+        if (_currentKey == new Vector2(0, -1))
+        {
+            Debug.Log("bas");
         }
     }
+
 
     public IEnumerator SlidingRoutine(float duree, Vector2 targetPos)
     {
@@ -164,6 +209,10 @@ public class Player : MonoBehaviour
                 else
                 {
                     hit.collider?.GetComponent<IInteractible>().Interaction();
+                    if (onRope)
+                    {
+                        hit.collider.enabled = false;
+                    }
                 }
             }
             else
