@@ -1,65 +1,76 @@
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class NainPoster : Interactible
+public class NainPoster : Interactible , INainPReset
 {
     private int _witchSecond;
-    [SerializeField] private GameObject[] _vents;
+    [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
+    [SerializeField] private List<GameObject> _originalVentsList = new List<GameObject>();
 
     private SpriteRenderer _spriteRenderer;
     private float _timer;
     private bool _canMove = true;
+    private bool _goToVent = false;
     private Vector2 _goHere;
+    private Vector2 _spawnPos;
 
     private void OnEnable()
     {
-      _witchSecond  = (int)Random.Range(1, 5);
+      _witchSecond  = (int)Random.Range(1, 6);
+        Debug.Log("j'irais dans la vent à " +  _witchSecond);
     }
 
     private void Start()
     {
+        ResetPos();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(GoDiego());
-    }
-
-    private void Update()
-    {
-        while (_timer < 5)
-        {
-            _timer = +Time.deltaTime;
-        }
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f * Time.deltaTime);
-    }
-    IEnumerator Wait(float duration)
-    {
-        _canMove = false;
-        StopAllCoroutines();
-        yield return new WaitForSeconds(duration);
-        _canMove = true;
+        if(_timer < 10)
+        {
+            _timer += Time.deltaTime;
+            if (_canMove)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f * Time.deltaTime);
+            }
+            if (Vector2.Distance(transform.position, _goHere) < 0.1f)
+            {
+                StartCoroutine(GoDiego());
+            }
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+        }
+
+
+        if ((int)_timer == (int)_witchSecond)
+        {
+            _goToVent = true;
+        } 
     }
 
     IEnumerator GoDiego()
     {
         if (_canMove)
         {
-            if ((int)_timer == _witchSecond)
+            if (_goToVent)
             {
-                if (_vents != null)
+                if (_ventsList != null)
                 {
-                    _goHere = _vents[Random.Range(0,_vents.Length)].transform.position;
+                    _goHere = _ventsList[Random.Range(0, _ventsList.Count)].transform.position;
+                    Debug.Log("muhehehe");
                 }
             }
             else
             {
                 _goHere = WhereToGo();
-                yield return new WaitForSeconds(3);
-                StartCoroutine(GoDiego());
+                yield return null;
             }
-            
         }
     }
     private Vector2 WhereToGo()
@@ -80,17 +91,51 @@ public class NainPoster : Interactible
         //faire exploser le joueur pour qu'il retourne au début de la salle
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_vents.Contains(collision.gameObject))
+        if (_ventsList.Contains(collision.gameObject))
         {
+            _ventsList.Remove(collision.gameObject);
+            Debug.Log("ok1");
+            StartCoroutine(InVent());
+            Debug.Log("ok2");
+            StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
+            Debug.Log("ok3");
         }
+        Debug.Log("non");
     }
 
     IEnumerator InVent()
     {
         _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         _spriteRenderer.enabled = true;
+    }
+
+    IEnumerator Teleportation(Vector2 where)
+    {   
+        if (_goToVent)
+        {
+            transform.position = where;
+            ResetList();
+            _goToVent = false;
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(GoDiego());
+        }
+    }
+
+    public virtual void ResetAllStats()
+    {
+        _timer = 0;
+        ResetPos();
+    }
+    private void ResetList()
+    {
+        _ventsList = _originalVentsList;
+    }
+    private void ResetPos()
+    {
+        _spawnPos = transform.position;
     }
 }
