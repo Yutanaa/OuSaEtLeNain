@@ -1,0 +1,119 @@
+{
+    "version": 1,
+    "name": "QTE",
+    "maps": [
+        {
+            "name": "Droite",
+            "id": "7eaee785-922a-4aa9-bb8e-d99801483cdc",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "f61e07c5-d7b3-4cc8-9625-03fddea3d614",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "beeae5bb-75cc-4b20-96e2-490ee2bda33e",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Gauche",
+            "id": "4fb96c09-9f72-4ae2-a9e2-c0567bc0d111",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "118f5426-9231-425a-840d-f7e7c4af33bc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b0b13719-5669-46ed-abc1-a72e03a851d9",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Haut",
+            "id": "34eb03ed-11a9-4333-a059-e6770942f17c",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "66849fc0-4e29-42e2-9130-0397a5a71ff0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "525b9146-f204-4ac6-9a8e-371fef5ef3ba",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Bas",
+            "id": "7c22d0f4-bfa7-44eb-bc79-b84b66ed488b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "2da5c2b4-f1bf-4472-8f5c-52488c33b1a8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "21d1653f-fbe1-4dec-bd5f-17cd45ad102f",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

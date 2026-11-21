@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NainPoster : Interactible , INainPReset
+public class NainPoster : Interactible
 {
     private int _witchSecond;
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
     [SerializeField] public List<GameObject> _originalVentsList = new List<GameObject>();
+    [SerializeField] public SalleDesNainPoster _salleDesNains;
+
+    [SerializeField] private Animator _animator;
 
     public Transform _center;
     private SpriteRenderer _spriteRenderer;
     private float _timer;
-    private bool _canMove = true;
+    private bool _canMove = false;
     private bool _goToVent = false;
     private Vector2 _goHere;
     private Vector2 _spawnPos;
@@ -24,25 +27,24 @@ public class NainPoster : Interactible , INainPReset
     private void OnEnable()
     {
 
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _witchSecond  = (int)Random.Range(1, 6);
         Debug.Log("j'irais dans la vent à " +  _witchSecond);
-    }
-
-    private void Start()
-    {
-
+        ResetPos();
     }
 
     public void StartMoving()
     {
-        ResetPos();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Log("staroui");
         ResetList();
-        StartCoroutine(GoDiego());
+        _canMove = true;
+        GoDiego();
     }
 
     private void FixedUpdate()
     {
+        if (!_canMove) return;
+
         if(_timer < 10)
         {
             _timer += Time.deltaTime;
@@ -52,22 +54,27 @@ public class NainPoster : Interactible , INainPReset
             }
             if (Vector2.Distance(transform.position, _goHere) < 0.1f)
             {
-                StartCoroutine(GoDiego());
+               GoDiego();
             }
         }
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+            if (Vector2.Distance(transform.position, _goHere) < 1f)
+            {
+                _animator.SetBool("Idle", true);
+            }
         }
 
 
         if ((int)_timer == (int)_witchSecond)
         {
             _goToVent = true;
+            Debug.Log("Je suis sus?");
         } 
     }
 
-    IEnumerator GoDiego()
+    private void GoDiego()
     {
         if (_canMove)
         {
@@ -82,7 +89,6 @@ public class NainPoster : Interactible , INainPReset
             else
             {
                 _goHere = WhereToGo();
-                yield return null;
             }
         }
     }
@@ -101,26 +107,33 @@ public class NainPoster : Interactible , INainPReset
 
     public override void Interaction()
     {
-        //faire exploser le joueur pour qu'il retourne au début de la salle
+        //to do add nain reçu
+        _salleDesNains.DestroyTheNains();
+        Debug.Log("let me clap that cheek");
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_ventsList.Contains(collision.gameObject))
+        if (_goToVent)
         {
-            _ventsList.Remove(collision.gameObject);
-            Debug.Log("ok1");
-            StartCoroutine(InVent());
-            Debug.Log("ok2");
-            StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
-            Debug.Log("ok3");
-        }
-        Debug.Log("non");
+            Debug.Log("Il rentre dans la vent");
+            if (_ventsList.Contains(collision.gameObject))
+            {
+
+                Debug.Log("La vent est possible, je rentre");
+                StartCoroutine(InVent());
+                Debug.Log("ok1");
+                StartCoroutine(Teleportation(_ventsList[Random.Range(0, _ventsList.Count)].transform.position));
+                Debug.Log("ok2");
+            }
+            Debug.Log("non");
+        }  
     }
 
     IEnumerator InVent()
     {
+        Debug.Log("I'm invisible");
         _spriteRenderer.enabled = false;
         yield return new WaitForSeconds(0.5f);
         _spriteRenderer.enabled = true;
@@ -134,15 +147,10 @@ public class NainPoster : Interactible , INainPReset
             transform.position = where;
             ResetList();
             yield return new WaitForSeconds(0.5f);
-            StartCoroutine(GoDiego());
+            GoDiego();
         }
     }
 
-    public virtual void ResetAllStats()
-    {
-        _timer = 0;
-        ResetPos();
-    }
     private void ResetList()
     {
         _ventsList = _originalVentsList;

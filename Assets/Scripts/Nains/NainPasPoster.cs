@@ -1,30 +1,33 @@
 using System.Collections;
 using UnityEngine;
 
-public class NainPasPoster : Interactible, INainPReset
+public class NainPasPoster : Interactible
 {
-    public bool _canMove = true;
+    public SalleDesNainPoster _SalleDesNainPoster;
+    public bool _canMove = false;
     public Vector2 _goHere;
     public Vector2 _spawnPos;
     public Transform _center;
     public float _timer;
+    [SerializeField] private Animator _animator;
 
     private Coroutine goCoroutine;
-    private void Start()
-    {
-
-    }
 
     private void OnEnable()
     {
-
+        ResetPos();
     }
-
     public void StartMoving()
     {
-        ResetPos();
+        Debug.Log("staroui");
+        _canMove = true;
+        GoDiego();
+    }
 
-        StartCoroutine(GoDiego());
+    public override void Interaction()
+    {
+        _SalleDesNainPoster.RestartEvent();
+        //_SalleDesNainPoster.ActiveFence();
     }
 
     public void SetCenter(Transform center)
@@ -35,6 +38,9 @@ public class NainPasPoster : Interactible, INainPReset
     }
     private void FixedUpdate()
     {
+
+        if (!_canMove) return;
+
         if (_timer < 10)
         {
             _timer += Time.deltaTime;
@@ -51,13 +57,13 @@ public class NainPasPoster : Interactible, INainPReset
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+            _animator.SetBool("Idle", true);
         }
     }
 
-    IEnumerator GoDiego()
+    private void GoDiego()
     {
         _goHere = WhereToGo();
-        yield return null;
     }
 
     private Vector2 WhereToGo()
@@ -78,16 +84,6 @@ public class NainPasPoster : Interactible, INainPReset
         return f;
     }
 
-    public override void Interaction()
-    {
-        //faire exploser le joueur pour qu'il retourne au début de la salle
-    }
-
-    public virtual void ResetAllStats()
-    {
-        _timer = 0;
-        ResetPos();
-    }
     private void ResetPos()
     {
         _spawnPos = transform.position;
