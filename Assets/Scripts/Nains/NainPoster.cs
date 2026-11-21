@@ -107,7 +107,7 @@ public class NainPoster : Interactible
 
     public override void Interaction()
     {
-        //faire exploser le joueur pour qu'il retourne au début de la salle
+        //to do add nain reçu
         _salleDesNains.DestroyTheNains();
         Debug.Log("let me clap that cheek");
     }
