@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public IInteractible itemTenu;
+    [SerializeField] public SeauEnMain itemTenu;
     public Vector2 lastRespawnPosition;
     public Animator animator;
 
@@ -104,64 +104,56 @@ public class Player : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
+
+        Vector2 startPosition = new Vector2(transform.position.x, transform.position.y) + Vector2.one * LookingDirection;
+
         if (itemTenu != null)
         {
             print("interact item");
-            // itemTenu.Interaction();
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, LookingDirection, 100f, layerMask);
-
-            // Does the ray intersect any objects excluding the player layer
-            if (hit)
-            {
-                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
-                Debug.Log("Did Hit");
-
-                if (hit.collider.GetComponent<SeauAuSol>())
-                {
-                    AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket());
-                }
-                hit.collider?.GetComponent<IInteractible>().Interaction();
-
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * 10000000, Color.orange);
-                // Debug.Log("Did not Hit");
-            }
-
+            print(itemTenu);
+            itemTenu.GetComponent<SeauEnMain>().ShootDirt(startPosition, LookingDirection);
             itemTenu = null;
         }
 
         else
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, LookingDirection, 100f, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(startPosition, LookingDirection, 1f, layerMask);
 
             // Does the ray intersect any objects excluding the player layer
             if (hit)
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
-                Debug.Log("Did Hit");
-                
-                hit.collider?.GetComponent<IInteractible>().Interaction();
+
+                Debug.DrawRay(startPosition, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
+
+                if (hit.collider.GetComponent<SeauAuSol>())
+                {
+                    AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket(transform));
+                }
+                else
+                {
+                    hit.collider?.GetComponent<IInteractible>().Interaction();
+                }
             }
             else
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * 10000000, Color.yellow);
+                Debug.DrawRay(startPosition, transform.TransformDirection(LookingDirection) * 1f, Color.yellow);
                 // Debug.Log("Did not Hit");
             }
         }
     }
 
 
-    public void AddItem(IInteractible gameo)
+    public void AddItem(SeauEnMain gameo)
     {
         itemTenu = gameo;
+        itemTenu.transform.SetParent(transform);
+        itemTenu.transform.position = transform.position;
         print(gameo);
     }
     void OnDrawGizmos()
     {
+        Vector2 startPosition = new Vector2(transform.position.x, transform.position.y) + Vector2.one * LookingDirection;
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 100f);
+        Gizmos.DrawSphere(startPosition, 100f);
     }
 }

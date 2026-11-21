@@ -24,6 +24,8 @@ public class NainVisible : Interactible
 
     public void SalirLeNain()
     {
-        
+        IsInteractible = true;
+        _renderer.enabled = true;
+        print("caca");
     }
 }

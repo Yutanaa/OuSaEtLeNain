@@ -7,13 +7,13 @@ public class SeauAuSol : Interactible
 
     public override void Interaction()
     {
-        GiveMeThatBucket();
+        // GiveMeThatBucket();
     }
 
 
-    public SeauEnMain GiveMeThatBucket()
+    public SeauEnMain GiveMeThatBucket(Transform parent)
     {
-        SeauEnMain Seau_EM = Instantiate(_seauEnMain, transform.position, Quaternion.identity);
+        SeauEnMain Seau_EM = Instantiate(_seauEnMain, parent);
         Seau_EM._nainScript = _nainVisible;
         return Seau_EM;
     }
