@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PorteArriere : MonoBehaviour
@@ -10,14 +11,23 @@ public class PorteArriere : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.transform.position = _poitToTp.position;
-
-            foreach (GameObject c in _colliderToDesable)
-            {
-                c.SetActive(false);
-            }
-
-            _exit.SetActive(true);
+            collision.GetComponent<Player>().StopCoroutine("SlidingRoutine");
+            StartCoroutine(TpJoueur(collision.gameObject));
         }
+    }
+
+    IEnumerator TpJoueur(GameObject joueur)
+    {
+        joueur.gameObject.SetActive(false);
+        joueur.transform.position = _poitToTp.position;
+        yield return new WaitForSeconds(0.2f);
+        joueur.SetActive(true);
+        joueur.GetComponent<Player>().canMove = true;
+
+        foreach (GameObject c in _colliderToDesable)
+        {
+            Destroy(c);
+        }
+        _exit.SetActive(true);
     }
 }
