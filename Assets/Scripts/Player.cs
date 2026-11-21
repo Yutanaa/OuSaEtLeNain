@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] public IInteractible itemTenu;
     public Vector2 lastRespawnPosition;
     public Animator animator;
 
     public PlayerInput _playerInput;
     public float movingDistance;
-    public IInteractible itemTenu;
     public LayerMask layerMask;
 
     public GameObject sprite;
@@ -107,7 +107,30 @@ public class Player : MonoBehaviour
         if (itemTenu != null)
         {
             print("interact item");
-            itemTenu.Interaction();
+            // itemTenu.Interaction();
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, LookingDirection, 100f, layerMask);
+
+            // Does the ray intersect any objects excluding the player layer
+            if (hit)
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
+                Debug.Log("Did Hit");
+
+                if (hit.collider.GetComponent<SeauAuSol>())
+                {
+                    AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket());
+                }
+                hit.collider?.GetComponent<IInteractible>().Interaction();
+
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * 10000000, Color.orange);
+                // Debug.Log("Did not Hit");
+            }
+
+            itemTenu = null;
         }
 
         else
@@ -119,19 +142,13 @@ public class Player : MonoBehaviour
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
                 Debug.Log("Did Hit");
-                if (hit.collider.GetComponent<SeauAuSol>())
-                {
-                    AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket());
-                }
-                else
-                {
-                    hit.collider?.GetComponent<IInteractible>().Interaction();
-                }
+                
+                hit.collider?.GetComponent<IInteractible>().Interaction();
             }
             else
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * 10000000, Color.yellow);
-                Debug.Log("Did not Hit");
+                // Debug.Log("Did not Hit");
             }
         }
     }
@@ -140,5 +157,11 @@ public class Player : MonoBehaviour
     public void AddItem(IInteractible gameo)
     {
         itemTenu = gameo;
+        print(gameo);
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 100f);
     }
 }

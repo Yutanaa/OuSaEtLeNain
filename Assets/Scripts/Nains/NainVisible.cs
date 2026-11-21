@@ -10,14 +10,20 @@ public class NainVisible : Interactible
     }
     public override void Interaction()
     {
-        IsInteractible = true;
-        _renderer.enabled = true;
-        print("caca");
+        if (IsInteractible)
+        {
+
+        }
     }
 
     public void NotThisTime()
     {
         //faire spawn les particules de poussière
         print("pipi");
+    }
+
+    public void SalirLeNain()
+    {
+        
     }
 }
