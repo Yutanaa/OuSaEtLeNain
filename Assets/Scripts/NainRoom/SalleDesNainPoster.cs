@@ -29,6 +29,7 @@ public class SalleDesNainPoster : MonoBehaviour
             {
                 N.gameObject.GetComponent<NainPoster>().SetCenter(_center.transform);
                 N.gameObject.GetComponent<NainPoster>()._originalVentsList = _ventsList;
+                N.gameObject.GetComponent<NainPoster>().StartMoving();
 
             }
             if (N.gameObject.GetComponent<NainPasPoster>())
@@ -36,6 +37,7 @@ public class SalleDesNainPoster : MonoBehaviour
 
                 N.gameObject.GetComponent<NainPasPoster>().SetCenter(_center.transform);
                 _place.Remove(here);
+                N.gameObject.GetComponent<NainPasPoster>().StartMoving();
             }
         }
     }

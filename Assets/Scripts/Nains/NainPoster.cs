@@ -23,11 +23,17 @@ public class NainPoster : Interactible , INainPReset
 
     private void OnEnable()
     {
-      _witchSecond  = (int)Random.Range(1, 6);
+
+        _witchSecond  = (int)Random.Range(1, 6);
         Debug.Log("j'irais dans la vent à " +  _witchSecond);
     }
 
     private void Start()
+    {
+
+    }
+
+    public void StartMoving()
     {
         ResetPos();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -82,7 +88,7 @@ public class NainPoster : Interactible , INainPReset
     }
     private Vector2 WhereToGo()
     {
-        Vector2 Here = new Vector2(RandomPos(_center.position.x - 4f, _center.position.x + 4f), RandomPos(_center.position.y - 4f, _center.position.y + 4f));
+        Vector2 Here = new Vector2(RandomPos(_center.position.x - 2f, _center.position.x + 2f), RandomPos(_center.position.y - 2f, _center.position.y + 2f));
         return Here;
     }
 

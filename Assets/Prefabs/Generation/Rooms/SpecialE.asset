@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48e00b7684d4bd4ebdf1715b4de3f56, type: 3}
+  m_Name: SpecialE
+  m_EditorClassIdentifier: Assembly-CSharp::RoomDefinition
+  prefab: {fileID: 1737635222647389804, guid: 8e6319a3755ebe64eb1a3463d5d2337c, type: 3}
+  openings: 1
