@@ -7269,7 +7269,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8571760048896741231}
-  - component: {fileID: 7607233460116820895}
   - component: {fileID: 3423756318101916115}
   m_Layer: 0
   m_Name: COPYSpecialBase
@@ -7297,32 +7296,6 @@ Transform:
   - {fileID: 6494207428381098184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7607233460116820895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952553201865512135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3796d07ca525b74e9f845b4391e3ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SalleDesNainPoster
-  _place:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _ventsList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _nains:
-  - {fileID: 344282417179035618, guid: 7ef7c3075996738459c9dac780074a68, type: 3}
-  - {fileID: 344282417179035618, guid: 7ef7c3075996738459c9dac780074a68, type: 3}
-  - {fileID: 3237851031805939722, guid: 2ddb8c8821d4d4f42b2d267772e045c0, type: 3}
-  _center: {fileID: 0}
 --- !u!114 &3423756318101916115
 MonoBehaviour:
   m_ObjectHideFlags: 0
