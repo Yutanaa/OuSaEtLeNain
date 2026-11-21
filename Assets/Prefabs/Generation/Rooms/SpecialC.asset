@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48e00b7684d4bd4ebdf1715b4de3f56, type: 3}
   m_Name: SpecialC
   m_EditorClassIdentifier: Assembly-CSharp::RoomDefinition
-  prefab: {fileID: 1737635222647389804, guid: 65424370c2589234da128d70b273ea86, type: 3}
+  prefab: {fileID: 3323886328534510577, guid: 49aedc33692e8c349a32e2e1fddb6649, type: 3}
   openings: 1

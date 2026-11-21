@@ -14,7 +14,8 @@ public class SeauAuSol : Interactible
     public SeauEnMain GiveMeThatBucket(Transform parent)
     {
         SeauEnMain Seau_EM = Instantiate(_seauEnMain, parent);
-        Seau_EM._nainScript = _nainVisible;
+        if (_nainVisible != null)
+            Seau_EM._nainScript = _nainVisible;
         return Seau_EM;
     }
 

@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    private Coroutine movementCoroutine;
+    private bool isTeleporting;
+
     [SerializeField] private List<Vector2> _keyToPress = new List<Vector2>();
     [SerializeField] private int _maxQTE = 3;
     private Vector2 _currentKey;
@@ -94,34 +97,36 @@ public class Player : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext context)
     {
+        if (!canMove || isTeleporting)
+            return;
+
         Vector2 direction = context.ReadValue<Vector2>();
 
-        if (canMove)
+
+        canMove = false;
+        if (direction.x != 0)
         {
-            canMove = false;
-            if (direction.x != 0)
-            {
-                sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
-            }
-            // transform.Translate(direction);
-            if (direction.y > 0)
-            {
-                animator.SetTrigger("WalkingUp");
-            }
-            else if (direction.y < 0)
-            {
-                animator.SetTrigger("WalkingDown");
-            }
-            else
-            {
-
-                animator.SetTrigger("Walking");
-            }
-
-            StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
-
-            LookingDirection = direction;
+            sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
         }
+        // transform.Translate(direction);
+        if (direction.y > 0)
+        {
+            animator.SetTrigger("WalkingUp");
+        }
+        else if (direction.y < 0)
+        {
+            animator.SetTrigger("WalkingDown");
+        }
+        else
+        {
+
+            animator.SetTrigger("Walking");
+        }
+
+        movementCoroutine = StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
+
+        LookingDirection = direction;
+
 
         if (onRope)
         {
@@ -138,6 +143,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     public void KeyLoader()
     {
         _currentKey = _keyToPress[UnityEngine.Random.Range(0, _keyToPress.Count)];
@@ -158,6 +164,7 @@ public class Player : MonoBehaviour
             Debug.Log("bas");
         }
     }
+
 
 
     public IEnumerator SlidingRoutine(float duree, Vector2 targetPos)
@@ -185,10 +192,9 @@ public class Player : MonoBehaviour
 
         OnStepCompleted?.Invoke(previousPosition);
 
+        movementCoroutine = null;
         canMove = true;
-        yield return null;
     }
-
     void OnRelease(InputAction.CallbackContext context)
     {
 
@@ -197,6 +203,25 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         transform.position = lastRespawnPosition;
+    }
+
+    public void Teleport(Vector2 targetPosition)
+    {
+
+        isTeleporting = true;
+        canMove = false;
+
+        if (movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+        }
+
+        transform.position = targetPosition;
+
+
+        isTeleporting = false;
+        canMove = true;
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -209,7 +234,8 @@ public class Player : MonoBehaviour
             print("interact item");
             print(itemTenu);
             itemTenu.GetComponent<SeauEnMain>().ShootDirt(LookingDirection, startPosition);
-            itemTenu = null;
+            //itemTenu = null;
+            RemoveItem();
         }
 
         else
@@ -243,12 +269,22 @@ public class Player : MonoBehaviour
         itemTenu = gameo;
         itemTenu.transform.SetParent(transform);
         itemTenu.transform.position = transform.position;
-        print(gameo);
+
+        animator.SetBool("HoldingBucket", true);
+        //print(gameo);
+    }
+
+    public void RemoveItem()
+    {
+        animator.SetBool("HoldingBucket", false);
+        Destroy(itemTenu.gameObject);
+        itemTenu = null;
+
     }
     void OnDrawGizmos()
     {
-        Vector2 startPosition = new Vector2(transform.position.x, transform.position.y) + Vector2.one * LookingDirection;
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(startPosition, 100f);
+        //Vector2 startPosition = new Vector2(transform.position.x, transform.position.y) + Vector2.one * LookingDirection;
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawSphere(startPosition, 100f);
     }
 }

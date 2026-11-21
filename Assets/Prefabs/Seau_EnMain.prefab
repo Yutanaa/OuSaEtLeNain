@@ -105,6 +105,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Seau
   _nainScript: {fileID: 0}
+  _dirtPrefab: {fileID: 5995412155575312028, guid: d623b4b4b7ceb6e4493d123b2a9116b8, type: 3}
   _nainLayserMask:
     serializedVersion: 2
     m_Bits: 1024
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384

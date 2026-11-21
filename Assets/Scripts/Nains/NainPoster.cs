@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NainPoster : Interactible
+public class NainPoster : NainBase
 {
     private int _witchSecond;
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();

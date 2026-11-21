@@ -22,8 +22,8 @@ public class Nainbecile : CrazyNain
     {
         if (player == null)
         {
-            Debug.LogError("Nainbécile : Player manquant.");
-            return;
+
+            player = FindFirstObjectByType<Player>();
         }
 
         if (_isDown)
