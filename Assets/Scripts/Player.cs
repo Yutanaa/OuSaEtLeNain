@@ -119,7 +119,14 @@ public class Player : MonoBehaviour
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
                 Debug.Log("Did Hit");
-                hit.collider?.GetComponent<IInteractible>().Interaction();
+                if (hit.collider.GetComponent<SeauAuSol>())
+                {
+                    AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket());
+                }
+                else
+                {
+                    hit.collider?.GetComponent<IInteractible>().Interaction();
+                }
             }
             else
             {
@@ -130,8 +137,8 @@ public class Player : MonoBehaviour
     }
 
 
-    public void AddItem(GameObject gameo)
+    public void AddItem(IInteractible gameo)
     {
-
+        itemTenu = gameo;
     }
 }
