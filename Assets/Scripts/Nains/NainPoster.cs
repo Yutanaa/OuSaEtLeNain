@@ -8,6 +8,8 @@ public class NainPoster : Interactible
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
     [SerializeField] public List<GameObject> _originalVentsList = new List<GameObject>();
 
+    [SerializeField] private Animator _animator;
+
     public Transform _center;
     private SpriteRenderer _spriteRenderer;
     private float _timer;
@@ -57,6 +59,10 @@ public class NainPoster : Interactible
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+            if (Vector2.Distance(transform.position, _goHere) < 1f)
+            {
+                _animator.SetBool("Idle", true);
+            }
         }
 
 

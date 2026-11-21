@@ -9,6 +9,7 @@ public class NainPasPoster : Interactible
     public Vector2 _spawnPos;
     public Transform _center;
     public float _timer;
+    [SerializeField] private Animator _animator;
 
     private Coroutine goCoroutine;
 
@@ -56,6 +57,7 @@ public class NainPasPoster : Interactible
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
+            _animator.SetBool("Idle", true);
         }
     }
 
