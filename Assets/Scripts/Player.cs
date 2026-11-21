@@ -146,7 +146,8 @@ public class Player : MonoBehaviour
             print("interact item");
             print(itemTenu);
             itemTenu.GetComponent<SeauEnMain>().ShootDirt(LookingDirection, startPosition);
-            itemTenu = null;
+            //itemTenu = null;
+            RemoveItem();
         }
 
         else
@@ -180,7 +181,17 @@ public class Player : MonoBehaviour
         itemTenu = gameo;
         itemTenu.transform.SetParent(transform);
         itemTenu.transform.position = transform.position;
-        print(gameo);
+
+        animator.SetBool("HoldingBucket", true);
+        //print(gameo);
+    }
+
+    public void RemoveItem()
+    {
+        animator.SetBool("HoldingBucket", false);
+        Destroy(itemTenu.gameObject);
+        itemTenu = null;
+
     }
     void OnDrawGizmos()
     {
