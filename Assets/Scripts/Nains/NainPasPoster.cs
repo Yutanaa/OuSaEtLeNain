@@ -6,6 +6,7 @@ public class NainPasPoster : Interactible , INainPReset
     private bool _canMove = true;
     private Vector2 _goHere;
     private Vector2 _spawnPos;
+    private Vector2 _center;
     private float _timer;
     private void Start()
     {
@@ -13,6 +14,10 @@ public class NainPasPoster : Interactible , INainPReset
         StartCoroutine(GoDiego());
     }
 
+    public void SetCenter(Vector2 center)
+    {
+        _center = center;
+    }
     private void FixedUpdate()
     {
         if (_timer < 10)
@@ -21,7 +26,7 @@ public class NainPasPoster : Interactible , INainPReset
 
             if (_canMove)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, _goHere , 3f * Time.deltaTime);
                 if (Vector2.Distance(transform.position, _goHere) < 0.1f)
                 {
                     StartCoroutine(GoDiego());
@@ -41,7 +46,7 @@ public class NainPasPoster : Interactible , INainPReset
     }
     private Vector2 WhereToGo()
     {
-        Vector2 Here = new Vector2(RandomPos(-5f,5), RandomPos(-3f, 3f));
+        Vector2 Here = new Vector2(RandomPos(-4f,4f) + _center.x, RandomPos(-4f, 4f) + _center.y);
         return Here;
     }
 

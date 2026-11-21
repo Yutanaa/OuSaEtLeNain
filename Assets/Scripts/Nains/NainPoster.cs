@@ -6,14 +6,20 @@ public class NainPoster : Interactible , INainPReset
 {
     private int _witchSecond;
     [SerializeField] private List<GameObject> _ventsList = new List<GameObject>();
-    [SerializeField] private List<GameObject> _originalVentsList = new List<GameObject>();
+    [SerializeField] public List<GameObject> _originalVentsList = new List<GameObject>();
 
+    public Vector2 _center;
     private SpriteRenderer _spriteRenderer;
     private float _timer;
     private bool _canMove = true;
     private bool _goToVent = false;
     private Vector2 _goHere;
     private Vector2 _spawnPos;
+
+    public void SetCenter(Vector2 center)
+    {
+        _center = center;
+    }
 
     private void OnEnable()
     {
@@ -25,6 +31,7 @@ public class NainPoster : Interactible , INainPReset
     {
         ResetPos();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        ResetList();
         StartCoroutine(GoDiego());
     }
 
@@ -75,7 +82,7 @@ public class NainPoster : Interactible , INainPReset
     }
     private Vector2 WhereToGo()
     {
-        Vector2 Here = new Vector2(RandomPos(-5f, 5), RandomPos(-3f, 3f));
+        Vector2 Here = new Vector2(RandomPos(-4f, 4f), RandomPos(-4f, 4f));
         return Here;
     }
 
