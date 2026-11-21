@@ -1,21 +1,27 @@
 using System.Collections;
 using UnityEngine;
 
-public class NainPasPoster : Interactible , INainPReset
+public class NainPasPoster : Interactible, INainPReset
 {
-    private bool _canMove = true;
-    private Vector2 _goHere;
-    private Vector2 _spawnPos;
-    private Vector2 _center;
-    private float _timer;
+    public bool _canMove = true;
+    public Vector2 _goHere;
+    public Vector2 _spawnPos;
+    public Transform _center;
+    public float _timer;
+
+    private Coroutine goCoroutine;
     private void Start()
     {
         ResetPos();
-        StartCoroutine(GoDiego());
+
+        if (_center)
+            _goHere = WhereToGo();
     }
 
-    public void SetCenter(Vector2 center)
+    public void SetCenter(Transform center)
     {
+        if (center == null)
+            Debug.Log("ON A PAS DE CENTRE NOUSUS");
         _center = center;
     }
     private void FixedUpdate()
@@ -26,10 +32,10 @@ public class NainPasPoster : Interactible , INainPReset
 
             if (_canMove)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _goHere , 3f * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, _goHere, 3f * Time.deltaTime);
                 if (Vector2.Distance(transform.position, _goHere) < 0.1f)
                 {
-                    StartCoroutine(GoDiego());
+                    _goHere = WhereToGo();
                 }
             }
         }
@@ -41,12 +47,18 @@ public class NainPasPoster : Interactible , INainPReset
 
     IEnumerator GoDiego()
     {
-            _goHere = WhereToGo();
-            yield return null;
+        _goHere = WhereToGo();
+        yield return null;
     }
+
     private Vector2 WhereToGo()
     {
-        Vector2 Here = new Vector2(RandomPos(-4f,4f) + _center.x, RandomPos(-4f, 4f) + _center.y);
+        if (!_center)
+        {
+            Debug.Log("No center");
+            return Vector2.zero;
+        }
+        Vector2 Here = new Vector2(RandomPos(_center.position.x - 4f, _center.position.x + 4f), RandomPos(_center.position.y - 4f, _center.position.y + 4f));
         return Here;
     }
 
