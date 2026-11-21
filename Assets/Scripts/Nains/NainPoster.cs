@@ -60,10 +60,7 @@ public class NainPoster : NainBase
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, _spawnPos, 3f * Time.deltaTime);
-            if (Vector2.Distance(transform.position, _goHere) < 1f)
-            {
-                _animator.SetBool("Idle", true);
-            }
+            _animator.SetBool("Idle", true);
         }
 
 

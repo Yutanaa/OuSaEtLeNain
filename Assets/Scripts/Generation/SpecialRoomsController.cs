@@ -17,11 +17,11 @@ public class SpecialRoomsController : MonoBehaviour
             {
                 if (nain != null)
                 {
-                    //Oriente les nains vers le bas de l'écran
+                    ////Oriente les nains vers le bas de l'écran
 
-                    nain.transform.rotation =
-                    Quaternion.Inverse(transform.rotation)
-                    * nain.transform.rotation;
+                    //nain.transform.rotation =
+                    //Quaternion.Inverse(transform.rotation)
+                    //* nain.transform.rotation;
 
                 }
             }

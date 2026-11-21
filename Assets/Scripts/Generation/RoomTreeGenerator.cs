@@ -691,12 +691,12 @@ public class RoomTreeGenerator : MonoBehaviour
             roomsParent
         );
 
-        // On récupère tous les Nains présents dans la salle.
-        Nainbecile[] nains = instance.GetComponentsInChildren<Nainbecile>(true);
 
-        foreach (Nainbecile nain in nains)
+        NainBase[] nains = instance.GetComponentsInChildren<NainBase>(true);
+
+        foreach (NainBase nain in nains)
         {
-            // On annule la rotation de la salle sur le Nain.
+
             nain.transform.rotation =
                 Quaternion.Inverse(instance.transform.rotation)
                 * nain.transform.rotation;

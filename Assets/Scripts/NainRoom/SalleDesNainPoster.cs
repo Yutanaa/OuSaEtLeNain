@@ -22,6 +22,11 @@ public class SalleDesNainPoster : MonoBehaviour
 
     private void SpawnNains()
     {
+        if(_nainsActif.Count > 0)
+        {
+
+            return;
+        }
         StartCoroutine(Delay());
         Debug.Log("Spawning nains");
         _player.transform.position = _entrer.position;
@@ -34,17 +39,17 @@ public class SalleDesNainPoster : MonoBehaviour
         {
             GameObject here = _place[Random.Range(0, _place.Count)];
             GameObject _nain = Instantiate(N, here.transform.position, Quaternion.identity);
-            if (N.gameObject.GetComponent<NainPoster>())
+            if (_nain.gameObject.GetComponent<NainPoster>())
             {
-                N.gameObject.GetComponent<NainPoster>().SetCenter(_center.transform);
-                N.gameObject.GetComponent<NainPoster>()._originalVentsList = _ventsList;
-                N.gameObject.GetComponent<NainPoster>()._salleDesNains = this;
+                _nain.gameObject.GetComponent<NainPoster>().SetCenter(_center.transform);
+                _nain.gameObject.GetComponent<NainPoster>()._originalVentsList = _ventsList;
+                _nain.gameObject.GetComponent<NainPoster>()._salleDesNains = this;
 
             }
-            if (N.gameObject.GetComponent<NainPasPoster>())
+            if (_nain.gameObject.GetComponent<NainPasPoster>())
             {
-                N.gameObject.GetComponent<NainPasPoster>()._SalleDesNainPoster = this;
-                N.gameObject.GetComponent<NainPasPoster>().SetCenter(_center.transform);
+                _nain.gameObject.GetComponent<NainPasPoster>()._SalleDesNainPoster = this;
+                _nain.gameObject.GetComponent<NainPasPoster>().SetCenter(_center.transform);
             }
             _nainsActif.Add(_nain);
             _place.Remove(here);
@@ -77,6 +82,12 @@ public class SalleDesNainPoster : MonoBehaviour
     private void StartEvent()
     {
         SpawnNains();
+        StartCoroutine(TimerStart());
+    }
+
+    IEnumerator TimerStart()
+    {
+        yield return new WaitForSeconds(0.5f);
         foreach (GameObject N in _nainsActif)
         {
             if (N.gameObject.GetComponent<NainPoster>())
@@ -89,6 +100,7 @@ public class SalleDesNainPoster : MonoBehaviour
             }
         }
     }
+
     public void RestartEvent()
     {
         Debug.Log("oui je restart" + _nainsActif.Count);
