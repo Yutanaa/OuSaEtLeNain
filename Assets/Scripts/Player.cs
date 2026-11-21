@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                
+
                 animator.SetTrigger("Walking");
             }
 
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
         {
             print("interact item");
             print(itemTenu);
-            itemTenu.GetComponent<SeauEnMain>().ShootDirt(startPosition, LookingDirection);
+            itemTenu.GetComponent<SeauEnMain>().ShootDirt(LookingDirection, startPosition);
             itemTenu = null;
         }
 
@@ -153,12 +153,10 @@ public class Player : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(startPosition, LookingDirection, 1f, layerMask);
 
+            Debug.DrawRay(startPosition, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
             // Does the ray intersect any objects excluding the player layer
             if (hit)
             {
-
-                Debug.DrawRay(startPosition, transform.TransformDirection(LookingDirection) * hit.distance, Color.red);
-
                 if (hit.collider.GetComponent<SeauAuSol>())
                 {
                     AddItem(hit.collider.GetComponent<SeauAuSol>().GiveMeThatBucket(transform));

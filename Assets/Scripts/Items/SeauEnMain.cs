@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class SeauEnMain : Interactible
+public class SeauEnMain : MonoBehaviour
 {
     [SerializeField] public NainVisible _nainScript;
     [SerializeField] private LayerMask _nainLayserMask;
+
+    private Vector2 startPosition;
+    private Vector2 lookingDirection;
 
     //public override void Interaction()
     //{
@@ -28,31 +31,48 @@ public class SeauEnMain : Interactible
     //    {
     //        return false;
     //    }
-       
+
     //}
 
 
     public void ShootDirt(Vector2 LookingDirection, Vector2 StartPosition)
     {
-        RaycastHit2D hit = Physics2D.Raycast(StartPosition, LookingDirection, 1f, _nainLayserMask);
+        startPosition = StartPosition;
+        lookingDirection = LookingDirection;
+        //RaycastHit2D hit = Physics2D.BoxCast(StartPosition, Vector2.one * 0.5f, 0f, LookingDirection, 2f, _nainLayserMask);
+        RaycastHit2D hit = Physics2D.Raycast(StartPosition, LookingDirection, 2f, _nainLayserMask);
+        Debug.DrawRay(StartPosition, transform.TransformDirection(LookingDirection) * 2f, Color.brown);
 
-        if (hit.collider?.GetComponent<NainVisible>())
+
+        if (hit)
         {
-            Debug.DrawRay(StartPosition, transform.TransformDirection(LookingDirection) * hit.distance, Color.orange);
-
-            if (hit.collider.GetComponent<NainVisible>())
+            if (hit.collider.gameObject.TryGetComponent<NainVisible>(out NainVisible nain))
             {
-                hit.collider.GetComponent<NainVisible>().SalirLeNain();
+                Debug.Log("Nain touché");
+
+                if (nain)
+                {
+                    Debug.Log("Nain salit");
+                    nain.SalirLeNain();
+
+                    Destroy(gameObject);
+                }
             }
         }
         else
         {
+            Debug.Log("Nain raté");
             Debug.DrawRay(StartPosition, transform.TransformDirection(LookingDirection) * 1f, Color.blue);
 
 
             _nainScript.NotThisTime();
-            Destroy(gameObject);
             // Debug.Log("Did not Hit");
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(startPosition, lookingDirection * 2f);
     }
 }
