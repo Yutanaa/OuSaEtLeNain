@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
 
             if (direction.x != 0)
             {
-                sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
+                sprite.GetComponent<SpriteRenderer>().flipX = direction.x > 0;
             }
             // transform.Translate(direction);
             if (direction.y > 0)
@@ -168,12 +168,15 @@ public class Player : MonoBehaviour
             if (_currentKey == direction)
             {
                 Debug.Log("GG");
+
+                SoundManager.Instance.PlaySFX("NainstabilitéQTEWin");
                 _gonnaFall += 1.5f;
                 KeyLoader();
             }
             else
             {
                 _gonnaFall -= 1.5f;
+                SoundManager.Instance.PlaySFX("NainstabilitéQTEWrong");
                 Debug.Log("nique toi");
             }
         }
@@ -236,6 +239,7 @@ public class Player : MonoBehaviour
         }
 
 
+        SoundManager.Instance.PlaySFX("Walk");
         OnStepCompleted?.Invoke(previousPosition);
 
         movementCoroutine = null;
@@ -257,6 +261,7 @@ public class Player : MonoBehaviour
     public void Teleport(Vector2 targetPosition)
     {
 
+        SoundManager.Instance.PlaySFX("TP");
         isTeleporting = true;
         canMove = false;
 

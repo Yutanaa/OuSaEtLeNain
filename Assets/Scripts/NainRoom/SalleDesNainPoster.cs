@@ -22,7 +22,9 @@ public class SalleDesNainPoster : MonoBehaviour
 
     private void SpawnNains()
     {
-        if(_nainsActif.Count > 0)
+
+        SoundManager.Instance.PlaySFX("NainposterSUS");
+        if (_nainsActif.Count > 0)
         {
 
             return;

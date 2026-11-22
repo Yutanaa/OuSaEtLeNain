@@ -21,6 +21,7 @@ public class TrapNain : MonoBehaviour
                     {
                         Debug.Log("Hitting Nainbecile: " + collision.gameObject.name);
                         animator.SetTrigger("Active");
+                        SoundManager.Instance.PlaySFX("NainChute");
                         nainbecile.Hit();
                         nainBecileHere = true;
                     }
@@ -29,6 +30,7 @@ public class TrapNain : MonoBehaviour
                         Debug.Log("Hitting NainNanere: " + collision.gameObject.name);
                         nainNanere.transform.position = new Vector2(nainNanere.transform.position.x, nainNanere.transform.position.y - 1);
                         animator.SetTrigger("Active");
+                        SoundManager.Instance.PlaySFX("NainChute");
                         nainNanere.Hit();
                     }
                 }

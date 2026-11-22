@@ -16,11 +16,11 @@ public class PorteAvant : MonoBehaviour
 
     IEnumerator TpJoueur(GameObject joueur)
     {
+
+        SoundManager.Instance.PlaySFX("NainsistepasBackTP");
         yield return new WaitForSeconds(0.2f);
-        joueur.gameObject.SetActive(false);
-        joueur.transform.position = _poitToTp.position;
+        joueur.GetComponent<Player>().Teleport(_poitToTp.position);
         yield return new WaitForSeconds(0.2f);
-        joueur.SetActive(true);
-        joueur.GetComponent<Player>().canMove = true;
+
     }
 }

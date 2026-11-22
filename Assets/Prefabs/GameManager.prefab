@@ -270,6 +270,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 110457636974055459}
+  - {fileID: 2029397594357458854}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7685107100823227588
@@ -502,3 +503,120 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8308231644472574521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2029397594357458854}
+  - component: {fileID: 3694907689865434729}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2029397594357458854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308231644472574521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6621626441791166261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3694907689865434729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308231644472574521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c301644b4409164fa94ddba600cea96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  musicSounds: []
+  sfxSounds:
+  - id: GainDwarf
+    clip: {fileID: 8300000, guid: e2059ed70fe23d04a8e422087fede73b, type: 3}
+    volume: 1
+    pitch: 0
+  - id: GetDirt
+    clip: {fileID: 8300000, guid: d6fc5d02b91873740b98e9793d572c72, type: 3}
+    volume: 1
+    pitch: 0
+  - id: NainBecilePas
+    clip: {fileID: 8300000, guid: 28cdb8affe6e8904495b4a9dd57d1504, type: 3}
+    volume: 1
+    pitch: 0
+  - id: NainChute
+    clip: {fileID: 8300000, guid: 9c0fb3782d3fd274b986426f2b8a1fa7, type: 3}
+    volume: 1
+    pitch: 0
+  - id: NainposterEnterHole
+    clip: {fileID: 8300000, guid: 246540d67d9ec3a4dbd2e037d25aec23, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: NainposterSUS
+    clip: {fileID: 8300000, guid: 7b40d7b4279a6a04f839159103d00531, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: NainsistepasBackTP
+    clip: {fileID: 8300000, guid: 3cc9a38a3036bba4eb3e316973f41f7c, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: NainsistepasOpenCoridoor
+    clip: {fileID: 8300000, guid: 0d615c054a2077b49ab764404f514fa5, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: "Nainstabilit\xE9QTEWin"
+    clip: {fileID: 8300000, guid: 11fc6d07ec7d0404bac4b0ed37b7f878, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: "Nainstabilit\xE9QTEWrong"
+    clip: {fileID: 8300000, guid: d27e553dc4bb4b84a9bf70c8ee72eda1, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: "Nainstabilit\xE9Rops"
+    clip: {fileID: 8300000, guid: 4dce708c8909c9743800db21a794b21e, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: NainvisibleGetDirty
+    clip: {fileID: 8300000, guid: 7f858c50d0f1ba946972b2c282124b96, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: NainvisibleLaugh
+    clip: {fileID: 8300000, guid: 31afc5d184d5ef343a0ef90d4eb9528d, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: "Nainnan\xE8reTP"
+    clip: {fileID: 8300000, guid: 910f33b9dc253a5409c765ecdb618345, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: LaunchDirt
+    clip: {fileID: 8300000, guid: 739219cece59b204a92e427447cc8634, type: 3}
+    volume: 1
+    pitch: 0.1
+  - id: TP
+    clip: {fileID: 8300000, guid: d6cf7b3f76f32f2418270ee9651b961c, type: 3}
+    volume: 1
+    pitch: 1
+  - id: Walk
+    clip: {fileID: 8300000, guid: f78e7b2549de71a4aad851344c55f8d2, type: 3}
+    volume: 1
+    pitch: 0.1
+  audioSourceCount: 10
+  masterVolume: 1
+  musicVolume: 1

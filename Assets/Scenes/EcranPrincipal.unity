@@ -515,8 +515,8 @@ Camera:
   m_GameObject: {fileID: 601755161}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -624,9 +624,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1487774431607623624, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1977486600181519010, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694907689865434729, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
+      propertyPath: sfxSounds.Array.data[14].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694907689865434729, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
+      propertyPath: sfxSounds.Array.data[15].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694907689865434729, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
+      propertyPath: sfxSounds.Array.data[16].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326329308250609022, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6621626441791166261, guid: f1a39a64f3d9ee942958d43104a3b9b0, type: 3}
       propertyPath: m_LocalPosition.x

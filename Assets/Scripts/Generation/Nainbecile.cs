@@ -124,6 +124,7 @@ public class Nainbecile : CrazyNain
         }
 
         transform.position = targetPosition;
+        SoundManager.Instance.PlaySFX("NainBecilePas");
     }
 
     public override void PlayDownAnimation()

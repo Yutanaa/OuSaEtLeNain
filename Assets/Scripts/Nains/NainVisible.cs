@@ -36,6 +36,7 @@ public class NainVisible : NainBase
 
     public void NotThisTime()
     {
+        SoundManager.Instance.PlaySFX("NainvisibleLaugh");
         //faire spawn les particules de poussière
         if (particle != null)
         {
@@ -48,6 +49,8 @@ public class NainVisible : NainBase
 
     public void SalirLeNain()
     {
+
+        SoundManager.Instance.PlaySFX("NainvisibleGetDirty");
         IsInteractible = true;
         _renderer.enabled = true;
     }

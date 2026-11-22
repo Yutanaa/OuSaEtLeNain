@@ -18,11 +18,10 @@ public class PorteArriere : MonoBehaviour
 
     IEnumerator TpJoueur(GameObject joueur)
     {
-        joueur.gameObject.SetActive(false);
-        joueur.transform.position = _poitToTp.position;
+        SoundManager.Instance.PlaySFX("NainsistepasOpenCoridoor");
+        joueur.GetComponent<Player>().Teleport(_poitToTp.position);
         yield return new WaitForSeconds(0.2f);
-        joueur.SetActive(true);
-        joueur.GetComponent<Player>().canMove = true;
+
 
         foreach (GameObject c in _colliderToDesable)
         {

@@ -58,6 +58,8 @@ public class NainNanere : CrazyNain
 
     IEnumerator TeleportToPoint(Transform tp)
     {
+
+        SoundManager.Instance.PlaySFX("NainnanèreTP");
         isTeleporting = true;
         yield return new WaitForSeconds(0.1f);
         isTeleporting = false;

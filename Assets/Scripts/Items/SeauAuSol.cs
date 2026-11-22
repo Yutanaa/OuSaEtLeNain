@@ -16,6 +16,8 @@ public class SeauAuSol : Interactible
         SeauEnMain Seau_EM = Instantiate(_seauEnMain, parent);
         if (_nainVisible != null)
             Seau_EM._nainScript = _nainVisible;
+
+        SoundManager.Instance.PlaySFX("GetDirt");
         return Seau_EM;
     }
 

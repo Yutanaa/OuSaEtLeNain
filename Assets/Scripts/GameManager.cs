@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         nbNains += val;
         nbNainAffich.text = nbNains.ToString();
+        SoundManager.Instance.PlaySFX("GainDwarf");
         if (nbNains >= 6)
         {
             EndGame();

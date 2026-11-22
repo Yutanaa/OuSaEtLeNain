@@ -39,6 +39,7 @@ public class SeauEnMain : MonoBehaviour
 
     public void ShootDirt(Vector2 LookingDirection, Vector2 StartPosition)
     {
+        SoundManager.Instance.PlaySFX("LaunchDirt");
         startPosition = StartPosition;
         lookingDirection = LookingDirection;
         //RaycastHit2D hit = Physics2D.BoxCast(StartPosition, Vector2.one * 0.5f, 0f, LookingDirection, 2f, _nainLayserMask);

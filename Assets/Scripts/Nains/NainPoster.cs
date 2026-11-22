@@ -104,9 +104,12 @@ public class NainPoster : NainBase
 
     public override void Interaction()
     {
-        //to do add nain reçu
+
+        GameManager.Instance.AddNain(1);
         _salleDesNains.DestroyTheNains();
         Debug.Log("let me clap that cheek");
+
+
     }
 
 
@@ -131,6 +134,7 @@ public class NainPoster : NainBase
     IEnumerator InVent()
     {
         Debug.Log("I'm invisible");
+        SoundManager.Instance.PlaySFX("NainposterEnterHole");
         _spriteRenderer.enabled = false;
         yield return new WaitForSeconds(0.5f);
         _spriteRenderer.enabled = true;
