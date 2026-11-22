@@ -28,6 +28,7 @@ public class NainVisible : NainBase
         if (IsInteractible)
         {
             //TODO : Rajouter le nain
+            GameManager.Instance.AddNain(1);
             Destroy(this.gameObject);
 
         }
