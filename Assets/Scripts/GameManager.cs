@@ -1,9 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public int nbNains = 0;
+    public bool isInGame = false;
+    public Canvas gameUI;
+    public TextMeshProUGUI nbNainAffich;
 
     private void Awake()
     {
@@ -25,14 +29,23 @@ public class GameManager : MonoBehaviour
         
     }
 
+
     public void RestartGame()
     {
         nbNains = 0;
+        gameUI.enabled = true;
+        nbNainAffich.text = nbNains.ToString();
+    }
+
+    public void EndGame()
+    {
+        gameUI.enabled = false;
     }
 
     public void AddNain(int val)
     {
         nbNains += val;
+        nbNainAffich.text = nbNains.ToString();
     }
 
     public int GetNbNain()

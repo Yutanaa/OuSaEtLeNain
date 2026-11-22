@@ -21,6 +21,7 @@ public class SceneLoadManager : MonoBehaviour
 
     public void LoadGame()
     {
+        GameManager.Instance.RestartGame();
         SceneManager.LoadScene(1);
     }
 
