@@ -32,7 +32,10 @@ public class Player : MonoBehaviour
     public bool onRope = false;
     public event Action<Vector2> OnStepCompleted;
 
-
+    [Header("Collision")]
+    [SerializeField] private Collider2D playerCollider;
+    [SerializeField] private LayerMask movementObstacleMask;
+    private readonly RaycastHit2D[] movementHits = new RaycastHit2D[8];
 
     private void OnEnable()
     {
@@ -85,29 +88,52 @@ public class Player : MonoBehaviour
         Vector2 direction = context.ReadValue<Vector2>();
 
 
-        canMove = false;
-        if (direction.x != 0)
-        {
-            sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
-        }
-        // transform.Translate(direction);
-        if (direction.y > 0)
-        {
-            animator.SetTrigger("WalkingUp");
-        }
-        else if (direction.y < 0)
-        {
-            animator.SetTrigger("WalkingDown");
-        }
-        else
-        {
+        if (canMove)
 
-            animator.SetTrigger("Walking");
+        {
+            canMove = false;
+
+            // Vérifie si le déplacement est possible.
+            if (!CanMove(direction))
+            {
+                canMove = true;
+                return;
+            }
+
+            if (direction.x != 0)
+            {
+                sprite.transform.localScale = new Vector3(-direction.x, 1, 1);
+            }
+            // transform.Translate(direction);
+            if (direction.y > 0)
+            {
+                animator.SetTrigger("WalkingUp");
+            }
+            else if (direction.y < 0)
+            {
+                animator.SetTrigger("WalkingDown");
+            }
+            else
+            {
+
+                animator.SetTrigger("Walking");
+            }
+            Vector2 destination = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
+
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position, LookingDirection, 1f, movementObstacleMask);
+            //Debug.DrawRay(transform.position, transform.TransformDirection(LookingDirection) * 1f, Color.green);
+
+            //if (hit.collider == null)
+            //{
+                movementCoroutine = StartCoroutine(SlidingRoutine(0.25f, destination));
+            //}
+            //else
+            //{
+            //    canMove = true;
+            //}
+            LookingDirection = direction;
         }
 
-        movementCoroutine = StartCoroutine(SlidingRoutine(0.25f, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y)));
-
-        LookingDirection = direction;
 
 
         if (onRope)
@@ -181,6 +207,9 @@ public class Player : MonoBehaviour
     {
 
     }
+
+
+
 
     public void Respawn()
     {
@@ -267,6 +296,48 @@ public class Player : MonoBehaviour
         itemTenu = null;
 
     }
+
+
+
+    private bool CanMove(Vector2 displacement)
+    {
+        if (playerCollider == null)
+        {
+            Debug.LogError("PlayerCollider manquant !");
+            return false;
+        }
+
+        if (displacement == Vector2.zero)
+            return false;
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(movementObstacleMask);
+        filter.useTriggers = false;
+
+        Vector2 direction = displacement.normalized;
+        float distance = 0.75f;
+
+
+        int hitCount = playerCollider.Cast(
+            direction,
+            filter,
+            movementHits,
+            distance
+        );
+
+        Debug.DrawRay(playerCollider.bounds.center, direction * distance, Color.red, 0.75f);
+
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (movementHits[i].collider != null)
+                return false;
+        }
+
+        return true;
+    }
+
+
     void OnDrawGizmos()
     {
         //Vector2 startPosition = new Vector2(transform.position.x, transform.position.y) + Vector2.one * LookingDirection;
