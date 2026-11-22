@@ -3,6 +3,7 @@ using UnityEngine;
 public class TrapNain : MonoBehaviour
 {
     private bool nainBecileHere = false;
+    [SerializeField] private Animator animator;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -19,6 +20,7 @@ public class TrapNain : MonoBehaviour
                     if (collision.gameObject.GetComponent<CrazyNain>() is Nainbecile nainbecile)
                     {
                         Debug.Log("Hitting Nainbecile: " + collision.gameObject.name);
+                        animator.SetTrigger("Active");
                         nainbecile.Hit();
                         nainBecileHere = true;
                     }
@@ -26,6 +28,7 @@ public class TrapNain : MonoBehaviour
                     {
                         Debug.Log("Hitting NainNanere: " + collision.gameObject.name);
                         nainNanere.transform.position = new Vector2(nainNanere.transform.position.x, nainNanere.transform.position.y - 1);
+                        animator.SetTrigger("Active");
                         nainNanere.Hit();
                     }
                 }

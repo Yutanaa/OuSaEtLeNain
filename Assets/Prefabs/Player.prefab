@@ -76,6 +76,10 @@ MonoBehaviour:
   LookingDirection: {x: 0, y: 0}
   canMove: 1
   onRope: 0
+  playerCollider: {fileID: 1215314461415572541}
+  movementObstacleMask:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!114 &122703840673392642
 MonoBehaviour:
   m_ObjectHideFlags: 0
