@@ -53,6 +53,7 @@ public class CrazyRoomManager : MonoBehaviour
         if(ListCrazyNains.Count == 2)
         {
             //TODO : RECUPERER LES NAINS
+            GameManager.Instance.AddNain(2);
             Debug.Log("2 NAINS DANS LA LISTE");
             foreach(CrazyNain n in ListCrazyNains)
             {
