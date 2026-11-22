@@ -40,12 +40,17 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameUI.enabled = false;
+        SceneLoadManager.Instance.LoadEndGame();
     }
 
     public void AddNain(int val)
     {
         nbNains += val;
         nbNainAffich.text = nbNains.ToString();
+        if (nbNains >= 6)
+        {
+            EndGame();
+        }
     }
 
     public int GetNbNain()
