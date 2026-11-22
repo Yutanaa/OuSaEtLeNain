@@ -76,6 +76,10 @@ MonoBehaviour:
   LookingDirection: {x: 0, y: 0}
   canMove: 1
   onRope: 0
+  playerCollider: {fileID: 1215314461415572541}
+  movementObstacleMask:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!114 &122703840673392642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +193,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211898014387995459}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -291,7 +295,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &2279455751153009275
 GameObject:
   m_ObjectHideFlags: 0
