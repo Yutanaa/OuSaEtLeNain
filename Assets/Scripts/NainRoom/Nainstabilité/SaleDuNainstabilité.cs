@@ -5,6 +5,7 @@ public class SaleDuNainstabilité : MonoBehaviour
 {
     public Transform _spawn;
     public GameObject _pont;
+    public GameObject _corde;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,6 +27,7 @@ public class SaleDuNainstabilité : MonoBehaviour
 
     public void SpawnPont()
     {
+        _corde.SetActive(false);
         _pont.SetActive(true);
     }
 }

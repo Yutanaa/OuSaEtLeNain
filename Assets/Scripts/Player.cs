@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,11 +11,17 @@ public class Player : MonoBehaviour
     private bool isTeleporting;
 
     [SerializeField] private List<Vector2> _keyToPress = new List<Vector2>();
-    [SerializeField] private int _maxQTE = 3;
     private Vector2 _currentKey;
-    public float _gonnaFall = 5;
+    public float _gonnaFall = 3;
     public Vector2 _targetToReach;
     public Transform _spawn;
+
+    public GameObject _canva;
+    public Image _image;
+    public Sprite _upKeyUi;
+    public Sprite _downKeyUi;
+    public Sprite _leftKeyUi;
+    public Sprite _rightKeyUi;
 
 
     [SerializeField] public SeauEnMain itemTenu;
@@ -68,10 +75,11 @@ public class Player : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, _targetToReach, 0.4f * Time.deltaTime);
             if (Vector2.Distance(transform.position, _targetToReach) < 1)
             {
+                _canva.SetActive(false);
                 animator.SetBool("OnRope", false);
                 transform.position = _targetToReach;
-                canMove = true;
                 onRope = false;
+                StartCoroutine(WaitBeforeWalk());
             }
         }
         else
@@ -82,7 +90,8 @@ public class Player : MonoBehaviour
 
     IEnumerator Falling()
     {
-        yield return new WaitForSeconds(1);
+        _canva.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
         animator.SetBool("OnRope", false);
         transform.position = _spawn.position;
         canMove = true;
@@ -147,25 +156,36 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator WaitBeforeWalk()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(1.5f);
+        canMove = true;
+    }
     public void KeyLoader()
     {
         _currentKey = _keyToPress[UnityEngine.Random.Range(0, _keyToPress.Count)];
         if (_currentKey == new Vector2(1, 0))
         {
+            _image.sprite = _rightKeyUi;
             Debug.Log("droite");
         }
         if (_currentKey == new Vector2(-1, 0))
         {
+            _image.sprite = _leftKeyUi;
             Debug.Log("gauche");
         }
         if (_currentKey == new Vector2(0, 1))
         {
+            _image.sprite = _upKeyUi;
             Debug.Log("haut");
         }
         if (_currentKey == new Vector2(0, -1))
         {
+            _image.sprite = _downKeyUi;
             Debug.Log("bas");
         }
+        _canva.GetComponent<Animator>().SetTrigger("Next");
     }
 
 
