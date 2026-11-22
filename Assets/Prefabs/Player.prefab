@@ -49,6 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec9922b95026a45aea8038c8cb53c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  _keyToPress: []
+  _maxQTE: 3
+  _gonnaFall: 5
+  _targetToReach: {x: 0, y: 0}
   itemTenu: {fileID: 0}
   lastRespawnPosition: {x: 0, y: 0}
   animator: {fileID: 5894606711387988678}
@@ -276,7 +280,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &6423800116744667185
 GameObject:
   m_ObjectHideFlags: 0
